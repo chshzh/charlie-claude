@@ -14,11 +14,10 @@ Quick reference checklist for conducting NCS project reviews.
 - [ ] Identify target board/platform
 - [ ] Review project documentation
 - [ ] Run automated check script: `./check_project.sh`
-- [ ] Check for PRD.md (business requirements)
-- [ ] Check for openspec/ directory (technical specs)
-  - [ ] `pm/openspec/config.yaml` — project context present
-  - [ ] `pm/openspec/specs/` — at least architecture spec present
-  - [ ] `pm/openspec/PROPOSAL_TEMPLATE.md` — proposal template present
+- [ ] Check for `docs/PRD.md` (business requirements)
+- [ ] Check for `docs/specs/` directory (technical specs)
+  - [ ] `docs/specs/overview.md` — spec index and PRD-to-spec mapping present
+  - [ ] `docs/specs/architecture.md` — at least architecture spec present
 
 ---
 

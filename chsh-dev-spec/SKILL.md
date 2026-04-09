@@ -1,12 +1,12 @@
 ---
 name: chsh-dev-spec
-description: Translate an approved PRD into engineering specs under docs/engineering/. Produces architecture.md, per-module specs, and config.yaml. Use when starting a new project design, updating specs after a PRD change, or documenting an existing codebase's design.
+description: Translate an approved PRD into engineering specs under docs/specs/. Produces architecture.md, per-module specs. Use when starting a new project design, updating specs after a PRD change, or documenting an existing codebase's design.
 ---
 
 # chsh-dev-spec — Technical Design Workflow
 
-Turns the product requirements in `docs/product/PRD.md` into the engineering specifications
-that drive implementation. Specs live in `docs/engineering/specs/` and are the contract
+Turns the product requirements in `docs/PRD.md` into the engineering specifications
+that drive implementation. Specs live in `docs/specs/` and are the contract
 between design (this skill) and implementation (`chsh-dev-project`).
 
 ---
@@ -16,9 +16,8 @@ between design (this skill) and implementation (`chsh-dev-project`).
 Check what exists before choosing a mode:
 
 ```bash
-cat docs/product/PRD.md                          # product requirements
-ls docs/engineering/specs/ 2>/dev/null           # existing specs
-cat docs/engineering/config.yaml 2>/dev/null     # existing project context
+cat docs/PRD.md                    # product requirements
+ls docs/specs/ 2>/dev/null         # existing specs
 git log --oneline -5                             # recent commits
 ```
 
@@ -37,7 +36,7 @@ Ask the user to confirm the mode before proceeding.
 
 ### A1. Read the PRD
 
-Load `docs/product/PRD.md`. Extract:
+Load `docs/PRD.md`. Extract:
 
 - Project name, NCS version, target board(s)
 - Selected feature list (FR entries)
@@ -46,7 +45,7 @@ Load `docs/product/PRD.md`. Extract:
 - Non-functional requirements: memory headroom, latency targets, security notes
 
 If no PRD exists, stop:
-> "No PRD found at `docs/product/PRD.md`. Please run **chsh-pm-prd** first."
+> "No PRD found at `docs/PRD.md`. Please run **chsh-pm-prd** first."
 
 ### A2. Plan the spec set
 
@@ -54,9 +53,8 @@ Derive the required spec files from PRD features. Always required:
 
 | File | Content |
 |------|---------|
-| `docs/engineering/specs/overview.md` | Entry point — spec index, PRD-to-spec mapping, design decisions |
-| `docs/engineering/specs/architecture.md` | System overview, module map, Zbus channels, boot sequence, memory budget |
-| `docs/engineering/config.yaml` | Project context fed to `chsh-dev-project` |
+| `docs/specs/overview.md` | Entry point — spec index, PRD-to-spec mapping, design decisions |
+| `docs/specs/architecture.md` | System overview, module map, Zbus channels, boot sequence, memory budget |
 
 Per module (one file per significant feature):
 
@@ -72,32 +70,11 @@ Per module (one file per significant feature):
 
 Present the plan to the user and confirm before generating.
 
-### A3. Generate `docs/engineering/config.yaml`
-
-```yaml
-schema: spec-driven
-context: |
-  Project: <name>
-  Tech stack: Zephyr RTOS, NCS <version>
-  Architecture: SMF+Zbus        # or Multi-threaded
-  Target boards: <boards>
-
-  Configuration strategy:
-  - Base configs in prj.conf
-  - Module Kconfig in src/modules/<name>/Kconfig.<name>
-  - CMakeLists.txt per module via add_subdirectory
-
-modules:
-  - name: <module_name>
-    spec: docs/engineering/specs/<module_name>-module.md
-    enabled: true
-```
-
-### A4. Generate `docs/engineering/specs/overview.md`
+### A3. Generate `docs/specs/overview.md`
 
 Use `OVERVIEW_TEMPLATE.md` as the base. Fill in:
 
-- **PRD Version**: read the latest entry from `docs/product/PRD.md`'s Changelog table and copy its timestamp into the `PRD Version` field of Document Information. Do the same for every spec file generated.
+- **PRD Version**: read the latest entry from `docs/PRD.md`'s Changelog table and copy its timestamp into the `PRD Version` field of Document Information. Do the same for every spec file generated.
 - **Spec Index**: list every spec file to be generated, with a one-line description and the PRD sections it covers
 - **Architecture Summary**: pattern choice (SMF+Zbus vs multi-threaded) and the top 3–5 design decisions with rationale
 - **PRD-to-Spec Mapping**: table mapping each FR/NFR to the spec file that implements it
@@ -106,7 +83,7 @@ Use `OVERVIEW_TEMPLATE.md` as the base. Fill in:
 
 Add the changelog entry (initial version, today's date).
 
-### A6. Generate `docs/engineering/specs/architecture.md`
+### A6. Generate `docs/specs/architecture.md`
 
 Use `ARCH_TEMPLATE.md` as the base. Fill in:
 

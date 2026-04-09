@@ -23,7 +23,7 @@ Strategies for footprint reduction and heap profiling in NCS/Zephyr projects.
 
 #### `chsh-dev-spec` — Technical Design (Phase 2)
 Translates an approved PRD into engineering specs: architecture overview, per-module specs
-(state machines, Kconfig, APIs, memory), and `config.yaml`.
+(state machines, Kconfig, APIs, memory.
 - Entry: [SKILL.md](chsh-dev-spec/SKILL.md)
 - Templates:
 	- [OVERVIEW_TEMPLATE.md](chsh-dev-spec/OVERVIEW_TEMPLATE.md) — top-level spec index + PRD-to-spec mapping
@@ -50,7 +50,7 @@ modules, and updates code when specs change.
 ### Product Manager Skills
 
 #### `chsh-pm-prd` — Interactive PRD Authoring
-Guides the Product Manager through creating and maintaining `docs/product/PRD.md`.
+Guides the Product Manager through creating and maintaining `docs/PRD.md`.
 Changes are tracked via a Revision History table inside the document (no dated filenames).
 - Entry: [SKILL.md](chsh-pm-prd/SKILL.md)
 - Template: [PRD_TEMPLATE.md](chsh-pm-prd/PRD_TEMPLATE.md)
@@ -118,7 +118,7 @@ skills/
 See [`chsh-ncs-workflow/SKILL.md`](chsh-ncs-workflow/SKILL.md) for the full four-phase lifecycle, document conventions, and ownership table:
 
 ```
-chsh-pm-prd  →  PRD.md  →  chsh-dev-spec  →  docs/engineering/specs/  →  chsh-dev-project  →  code  →  chsh-pm-review
+chsh-pm-prd  →  PRD.md  →  chsh-dev-spec  →  docs/specs/  →  chsh-dev-project  →  code  →  chsh-pm-review
 ```
 
 Living documents (`PRD.md`, specs) use a **Changelog table**. QA/Test reports use dated filenames (`TEST-YYYY-MM-DD-HH-MM.md`, `QA-YYYY-MM-DD-HH-MM.md`).

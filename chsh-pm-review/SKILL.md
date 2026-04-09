@@ -12,8 +12,8 @@ well-built (QA Report) and behaves as the PRD requires (Test Report).
 >
 > | Document | Question | Hardware? | When required | Output |
 > |----------|----------|-----------|---------------|--------|
-> | Test Report | "Does it behave as the PRD says?" | Yes — run on board | **Always** — after every implementation cycle | `docs/qa/TEST-YYYY-MM-DD-HH-MM.md` |
-> | QA Report | "Is the code well-built?" | No — AI reviews code | **Release/demo only** — optional otherwise | `docs/qa/QA-YYYY-MM-DD-HH-MM.md` |
+> | Test Report | "Does it behave as the PRD says?" | Yes — run on board | **Always** — after every implementation cycle | `docs/TEST-YYYY-MM-DD-HH-MM.md` |
+> | QA Report | "Is the code well-built?" | No — AI reviews code | **Release/demo only** — optional otherwise | `docs/QA-YYYY-MM-DD-HH-MM.md` |
 
 ---
 
@@ -22,8 +22,8 @@ well-built (QA Report) and behaves as the PRD requires (Test Report).
 Before starting, verify:
 
 ```bash
-cat docs/product/PRD.md                          # acceptance criteria source
-ls docs/engineering/specs/overview.md            # spec version reference
+cat docs/PRD.md                          # acceptance criteria source
+ls docs/specs/overview.md            # spec version reference
 grep "SPECS_VERSION" src/main.c                  # firmware spec version
 west build --build-dir build/ 2>&1 | tail -5     # confirm build is clean
 ```
@@ -48,7 +48,7 @@ Document Information of each report.
 
 Score each category systematically.
 
-### A3. Generate `docs/qa/QA-YYYY-MM-DD-HH-MM.md`
+### A3. Generate `docs/QA-YYYY-MM-DD-HH-MM.md`
 
 Use `QA_TEMPLATE.md` as the base. Fill in all sections:
 
@@ -82,7 +82,7 @@ Open a serial monitor and capture the boot log.
 
 ### B2. Map PRD acceptance criteria to test cases
 
-Read `docs/product/PRD.md`. For every FR and NFR:
+Read `docs/PRD.md`. For every FR and NFR:
 - Extract all acceptance criteria lines
 - Assign each a TC ID: `TC-<FR number>-<sequence>` (e.g. `TC-001-01`)
 - List them in the Test Report before starting any testing
@@ -99,7 +99,7 @@ For failures, record expected vs actual behaviour and suggest routing:
 - Spec gap → Phase 2
 - Missing PRD requirement → Phase 1
 
-### B4. Generate `docs/qa/TEST-YYYY-MM-DD-HH-MM.md`
+### B4. Generate `docs/TEST-YYYY-MM-DD-HH-MM.md`
 
 Use `TEST_TEMPLATE.md` as the base. Fill in:
 - Document Information (PRD Version, Specs Version, firmware build timestamp)
@@ -170,14 +170,14 @@ Then ask:
 
 ## Document Conventions
 
-- **QA Report**: `docs/qa/QA-YYYY-MM-DD-HH-MM.md` — code quality audit snapshot
-- **Test Report**: `docs/qa/TEST-YYYY-MM-DD-HH-MM.md` — functional test snapshot
+- **QA Report**: `docs/QA-YYYY-MM-DD-HH-MM.md` — code quality audit snapshot
+- **Test Report**: `docs/TEST-YYYY-MM-DD-HH-MM.md` — functional test snapshot
 - Both are dated snapshots (not living documents); keep all runs for history
 - Reference the PRD Changelog version and Specs overview version in both headers
 
 ## Related Skills
 
 - `chsh-ncs-workflow` — full lifecycle orchestrator; routes back here after Phase 3
-- `chsh-pm-prd` — update `docs/product/PRD.md` if requirements need changing
+- `chsh-pm-prd` — update `docs/PRD.md` if requirements need changing
 - `chsh-dev-spec` — update engineering specs if design gaps are found
 - `chsh-dev-project` — fix code for P0 issues

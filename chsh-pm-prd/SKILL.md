@@ -1,12 +1,12 @@
 ---
 name: chsh-pm-prd
-description: Interactive PRD authoring for NCS IoT projects. Guides the Product Manager through creating, extending, or updating PRD.md under docs/product/. No coding knowledge required. Use when creating a new PRD, adding or changing a feature, or syncing the PRD after code changes.
+description: Interactive PRD authoring for NCS IoT projects. Guides the Product Manager through creating, extending, or updating PRD.md under docs/. No coding knowledge required. Use when creating a new PRD, adding or changing a feature, or syncing the PRD after code changes.
 ---
 
 # chsh-pm-prd — Interactive PRD Workflow
 
 This skill is for the **Product Manager** role. It asks questions in plain language
-and maintains a single `PRD.md` in `docs/product/` with a built-in revision history table.
+and maintains a single `PRD.md` in `docs/` with a built-in revision history table.
 
 No Kconfig, no Flash/RAM numbers, no architecture diagrams — those are for the engineer.
 The PRD answers: **What should this device do, for whom, and how should it behave?**
@@ -20,7 +20,7 @@ Template: [`PRD_TEMPLATE.md`](PRD_TEMPLATE.md)
 Check what exists in the project:
 
 ```bash
-cat docs/product/PRD.md 2>/dev/null           # existing PRD (check Revision History)
+cat docs/PRD.md 2>/dev/null           # existing PRD (check Revision History)
 git log --oneline -10 -- src/ prj.conf CMakeLists.txt    # recent code changes
 ```
 
@@ -98,7 +98,7 @@ Ask: which P0 requirements must all pass before the product can be released?
 
 ## Mode B — Add Feature
 
-1. Read `docs/product/PRD.md` and check the current **Revision History**.
+1. Read `docs/PRD.md` and check the current **Revision History**.
 2. Show the current feature list (Sections 2 and 3) as a brief summary.
 3. Ask: *"What feature would you like to add?"*
 4. For the new feature, ask:
@@ -113,7 +113,7 @@ Ask: which P0 requirements must all pass before the product can be released?
 
 ## Mode C — Change Feature
 
-1. Read `docs/product/PRD.md` and check the current **Revision History**.
+1. Read `docs/PRD.md` and check the current **Revision History**.
 2. List the current functional requirements (FR-xxx) with one-line titles.
 3. Ask: *"Which requirement would you like to change?"*
 4. Show the current text, then ask what should change:
@@ -131,7 +131,7 @@ Use this when the developer has made code changes but the PRD has not been updat
 
 ### D1. Find the gap
 
-Read the **Revision History** table in `docs/product/PRD.md` to get the last PRD revision date.
+Read the **Revision History** table in `docs/PRD.md` to get the last PRD revision date.
 
 ```bash
 PRD_DATE=<last revision date from table>
@@ -166,7 +166,7 @@ Proceed to **Generate Output**.
 
 After any mode:
 
-1. Update `docs/product/PRD.md` using `PRD_TEMPLATE.md` as the structure.
+1. Update `docs/PRD.md` using `PRD_TEMPLATE.md` as the structure.
 2. Add a new row to the **Revision History** table at the bottom of the document:
    ```markdown
    | YYYY-MM-DD-HH-MM | <one-line summary of changes> |
@@ -179,7 +179,7 @@ After any mode:
 
 After saving the PRD, always ask:
 
-> "The PRD is updated at `docs/product/PRD.md` (see Revision History for this change).
+> "The PRD is updated at `docs/PRD.md` (see Revision History for this change).
 >
 > Would you like to hand off to **chsh-dev-spec** to update the engineering specs,
 > or to **chsh-dev-project** to implement or update the code?
