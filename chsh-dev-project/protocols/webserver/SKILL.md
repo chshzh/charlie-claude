@@ -1,6 +1,6 @@
 ````skill
 ---
-name: ncs-webserver
+name: chsh-dev-project/protocols/webserver
 description: Static web server with HTML/CSS/JS, REST APIs, and WebSockets for Nordic NCS
 parent: ncs-protocols
 ---

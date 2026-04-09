@@ -1,5 +1,5 @@
 ---
-name: ncs-gitcommit
+name: chsh-dev-commit
 description: Use when the user asks to prepare commits, review changes for committing, commit all changes, or decide how to split work into multiple Git commits.
 ---
 

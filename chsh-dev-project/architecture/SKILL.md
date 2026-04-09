@@ -1,6 +1,6 @@
 ````skill
 ---
-name: ncs-architecture
+name: chsh-dev-project/architecture
 description: Architecture patterns for Nordic NCS projects - simple multi-threaded vs SMF+zbus modular
 parent: ncs-project
 ---

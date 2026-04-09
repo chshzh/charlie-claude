@@ -1,6 +1,6 @@
 ````skill
 ---
-name: ncs-protocols
+name: chsh-dev-project/protocols
 description: Network protocols for Nordic NCS - MQTT, HTTP, CoAP, UDP, TCP, WebServer
 parent: ncs-project
 ---

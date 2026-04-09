@@ -1,161 +1,275 @@
-````skill
 ---
-name: ncs-features
-description: Modular feature selection for Nordic NCS projects - Wi-Fi Shell, Memfault, BLE Provisioning, and more
-parent: ncs-project
+name: chsh-pm-prd
+description: Interactive PRD authoring for NCS projects — guide the user through creating, updating, or extending a versioned PRD-YYYY-MM-DD.md under docs/product/. Use when the user wants to create a new PRD, add or change a feature, or sync the PRD after code changes.
 ---
 
-# Features Subskill
+# chsh-pm-prd — Interactive PRD Workflow
 
-Modular feature overlays for Nordic NCS projects - choose any combination of 12 features.
+This skill guides the user interactively through PRD authoring and maintenance.
+All output is a versioned `PRD-YYYY-MM-DD.md` saved to `docs/product/` in the project.
 
-> **Full workflow**: See [`../WORKFLOW.md`](../WORKFLOW.md) for the complete 5-phase
-> ProductManager → openspec → Developer → QA cycle and document ownership table.
+---
 
-## Documentation Strategy
+## Step 0 — Detect Mode
 
-**PRD.md** (Product Manager responsibility):
-- ✅ Business requirements and feature selection (the "what" and "why")
-- ✅ User stories and acceptance criteria
-- ✅ Success metrics and target users
-- ✅ High-level architecture (pattern selection, NOT implementation detail)
-
-**openspec specs/** (Developer + openspec responsibility):
-- ✅ Implementation detail: data flows, Kconfig symbols, memory/latency impact
-- ✅ Per-feature proposals with pass criteria
-- ✅ Task breakdowns for Developer NCS skill
-
-## 🎯 Feature Categories
-
-### Wi-Fi Features
-- **Wi-Fi Shell**: Interactive commands for development/debugging
-- Wi-Fi STA, SoftAP, P2P: (See [Developer Wi-Fi skill](../../../Developer/ncs/project/wifi/SKILL.md))
-
-## 🧭 Workspace Application Readiness
-
-Product-level apps must follow the [NCS workspace application](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/app_dev/create_application.html#workspace_application) pattern so teams can reproduce the environment quickly.
-
-- ✅ **west.yml** in the repo root that pins `sdk-nrf` (and other dependencies) to the approved revision (e.g., `v3.2.1`).
-- ✅ **README “Workspace setup” section** that shows: `west init -l <app>` → `west update -o=--depth=1 -n` → `west build ...`.
-- ✅ **Automation**: GitHub Actions (or Azure DevOps) that (1) parse the manifest revision, (2) run format/static checks, and (3) build all customer-facing firmware images.
-- ✅ **Release gates**: PRs must stay red until format + build jobs succeed.
-
-When reviewing PRDs or QA reports, verify these four items exist; otherwise the project is not “release ready” even if features compile locally.
-
-## 🧪 Lessons from SoftAP Webserver QA
-
-- **Lock down networking facts** – PRD.md, README.md, QA.md, and REST samples must all cite the same SoftAP subnet (`192.168.7.0/24` with gateway `192.168.7.1`). Any drift confuses testers and customers.
-- **Template credentials** – Require an `overlay-wifi-credentials.conf.template` (or similar) in every Wi-Fi project, documented in Quick Start instructions, with the real overlay `.gitignored`. Reject PRs that log or commit passwords.
-- **Per-board capability matrices** – Capture button/LED counts per development kit directly in PRD acceptance criteria so QA can score features accurately when firmware targets multiple boards.
-- **Automation is a gate** – Treat `ProductManager/ncs/review/check_project.sh` as blocking. Feature work pauses until the script runs clean, otherwise every QA cycle repeats the same manual findings.
-- **Plan resiliency features** – Add backlog items (and acceptance tests) for Wi-Fi retry/back-off behavior when enabling SoftAP fails so the roadmap reflects real-world reliability gaps.
-
-### Network Protocols
-- MQTT, HTTP Client, HTTPS Server, CoAP, UDP, TCP  
-  (See [Developer protocols skill](../../../Developer/ncs/project/protocols/SKILL.md))
-
-### Advanced Features
-
-**Heap Monitor** — Runtime heap tracking with standardised logs and Memfault metrics:
-```kconfig
-# prj.conf
-CONFIG_HEAPS_MONITOR=y
-CONFIG_HEAPS_MONITOR_LOG_LEVEL_INF=y
-```
-- Flash: ~+2 KB, RAM: negligible (static state vars only)
-- Auto-detects system heap (`HEAP_MEM_POOL_SIZE > 0`) and mbedTLS heap (`MBEDTLS_ENABLE_HEAP=y`)
-- Auto-selects required low-level Zephyr/mbedTLS stats options — no manual `prj.conf` wiring needed
-- Emits standardised periodic log lines every 30 s (configurable):
-  ```
-  <inf> heap_monitor: System Heap: used=51712/98304 (52%) blocks=n/a, peak=64752/98304 (65%), peak_blocks=n/a
-  <inf> heap_monitor: mbedTLS Heap: used=19136/110592 (17%) blocks=49, peak=72684/110592 (65%), peak_blocks=197
-  ```
-- When `CONFIG_APP_MEMFAULT_MODULE=y` automatically updates `ncs_system_heap_*` and `ncs_mbedtls_heap_*` Memfault heartbeat metrics
-- Reference: copy `src/modules/heap_monitor/` from `ncs-project-logo`
-
-**Memfault** - Cloud monitoring, debugging, and OTA:
-```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-memfault.conf .
-```
-- Flash: +120KB, RAM: +50KB, Heap: +96KB
-- Requires: Wi-Fi STA, HTTP Client, TLS, Flash storage
-- Setup: Sign up at memfault.com
-
-**BLE Provisioning** - Bluetooth credential provisioning:
-```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-ble-prov.conf .
-```
-- Flash: +60KB, RAM: +20KB, Heap: Shared
-- Requires: Wi-Fi, Bluetooth LE, Settings/NVS
-- Use for: User-friendly device setup
-
-**Wi-Fi Shell** - Interactive Wi-Fi commands:
-```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-wifi-shell.conf .
-```
-- Flash: +15KB, RAM: +8KB, Heap: +8KB
-- Essential for development and testing
-- Commands: wifi scan, connect, disconnect, stats
-
-## 📖 Complete Documentation
-
-**OpenSpec specs/** (Developer responsibility):
-- ✅ Technical implementation details (the "how")
-- ✅ Module architecture and state machines
-- ✅ API specifications and sequence diagrams
-- ✅ See `openspec/specs/` for module-level documentation
-
-**[FEATURE_SELECTION.md](features/FEATURE_SELECTION.md)** (~15,000 tokens)
-- Detailed docs for all 12 features
-- Complete Kconfig requirements
-- Full code examples
-- Memory requirements
-- Dependencies
-- Best practices
-
-**[FEATURE_QUICK_REF.md](features/FEATURE_QUICK_REF.md)** (~3,000 tokens)
-- Quick lookup guide
-- Common combinations
-- Memory budgets
-- Build commands
-
-## 🗂️ Feature Overlays
-
-All overlays in `features/overlays/`:
-- `overlay-wifi-shell.conf`
-- `overlay-udp.conf`
-- `overlay-tcp.conf`
-- `overlay-mqtt.conf`
-- `overlay-http-client.conf`
-- `overlay-https-server.conf`
-- `overlay-coap.conf`
-- `overlay-memfault.conf`
-- `overlay-ble-prov.conf`
-- `overlay-multithreaded.conf` (architecture)
-- `overlay-smf-zbus.conf` (architecture)
-
-## 🚀 Usage
+Before doing anything else, check the project:
 
 ```bash
-# Combine any features
-west build -p -b nrf7002dk/nrf5340/cpuapp -- \
-  -DEXTRA_CONF_FILE="wifi-sta.conf;overlay-wifi-shell.conf;overlay-mqtt.conf;overlay-memfault.conf"
+ls docs/product/PRD-*.md 2>/dev/null | sort | tail -1   # latest versioned PRD
+git log --oneline -5                                       # recent commits
 ```
 
-## 📊 Common Combinations
+Present the user with the correct starting options:
 
-**IoT Sensor with Cloud**:
-- Wi-Fi STA + MQTT + Memfault
-- Memory: Flash ~260KB, RAM ~120KB, Heap ~100KB
+| Condition | Offer |
+|---|---|
+| No `docs/product/PRD-*.md` exists | **New** only |
+| PRD exists, no code changes since its date | **Add Feature**, **Change Feature** |
+| PRD exists, commits exist after its date | **Update** (code changed), **Add Feature**, **Change Feature** |
 
-**Smart Home Device**:
-- Wi-Fi STA + HTTP Client + BLE Prov + Memfault
-- Memory: Flash ~280KB, RAM ~130KB, Heap ~100KB
+Ask the user: *"Which mode would you like?"*
 
-**Configuration Portal**:
-- Wi-Fi SoftAP + HTTPS Server + TCP
-- Memory: Flash ~200KB, RAM ~110KB, Heap ~128KB
+---
 
-For complete details, see [FEATURE_SELECTION.md](features/FEATURE_SELECTION.md)
+## Mode A — New PRD
 
-````
+Walk through these questions one section at a time. Wait for answers before moving on.
+
+### A1. Project Identity
+- Project name (also used as folder/repo name)?
+- One-sentence description of what it does?
+- NCS version (e.g. v3.2.4)?
+- Target board(s)? (nRF7002DK / nRF54LM20DK+nRF7002EBII / other)
+
+### A2. Problem & Users
+- What problem does this project solve?
+- Who are the primary users? Secondary?
+- What is the main pain point today without this product?
+
+### A3. Feature Selection
+
+Present each category and ask which to include. Show flash/RAM cost next to each.
+
+**Wi-Fi Mode** (pick one or more):
+| # | Feature | Config flag | Flash | RAM |
+|---|---|---|---|---|
+| 1 | Wi-Fi STA | `CONFIG_WIFI_NM_WPA_SUPPLICANT=y` | ~60 KB | ~40 KB |
+| 2 | Wi-Fi SoftAP | `CONFIG_NRF70_AP_MODE=y` | ~65 KB | ~50 KB |
+| 3 | Wi-Fi P2P | snippet `wifi-p2p` | ~70 KB | ~45 KB |
+
+**Network Protocols** (pick any):
+| # | Feature | Config flag | Flash | RAM |
+|---|---|---|---|---|
+| 4 | HTTP Server | `CONFIG_HTTP_SERVER=y` | ~25 KB | ~20 KB |
+| 5 | HTTPS Server | + TLS | ~45 KB | ~30 KB |
+| 6 | HTTP Client | `CONFIG_NET_HTTP_CLIENT=y` | ~15 KB | ~8 KB |
+| 7 | MQTT | `CONFIG_MQTT_LIB=y` | ~20 KB | ~10 KB |
+| 8 | CoAP | `CONFIG_COAP=y` | ~10 KB | ~5 KB |
+| 9 | UDP | `CONFIG_NET_UDP=y` | ~5 KB | ~2 KB |
+| 10 | TCP | `CONFIG_NET_TCP=y` | ~20 KB | ~10 KB |
+| 11 | mDNS | `CONFIG_MDNS_RESPONDER=y` | ~10 KB | ~5 KB |
+
+**Storage:**
+| # | Feature | Config flag | Flash | RAM |
+|---|---|---|---|---|
+| 12 | NVS | `CONFIG_NVS=y` | ~8 KB | ~3 KB |
+| 13 | Settings | `CONFIG_SETTINGS=y` | ~10 KB | ~4 KB |
+| 14 | Wi-Fi Credentials | `CONFIG_WIFI_CREDENTIALS=y` | ~5 KB | ~2 KB |
+
+**Advanced:**
+| # | Feature | Config flag | Flash | RAM |
+|---|---|---|---|---|
+| 15 | Memfault | overlay-memfault.conf | ~120 KB | ~50 KB |
+| 16 | BLE Provisioning | overlay-ble-prov.conf | ~60 KB | ~20 KB |
+| 17 | Heap Monitor | `CONFIG_HEAPS_MONITOR=y` | ~2 KB | ~1 KB |
+
+**Architecture Pattern:**
+| # | Pattern | When to use |
+|---|---|---|
+| A | SMF + Zbus | Recommended for multi-module systems; Nordic's preferred pattern |
+| B | Multi-threaded | Simpler; good for small single-purpose apps |
+
+### A4. Functional Requirements
+
+For each selected feature, ask:
+- User story: "As a [user], I want to [action] so that [benefit]"
+- Acceptance criteria (2–4 bullet points each)
+- Priority: P0 (must have) / P1 (should have) / P2 (nice to have)
+
+Link each FR to the matching engineering spec:
+`[spec-name.md](../engineering/specs/spec-name.md)`
+
+### A5. Non-Functional Requirements
+- Dashboard/API response time target?
+- Connection time targets (STA, SoftAP, P2P)?
+- 24-hour stability requirement?
+- Memory headroom target (Flash/RAM free)?
+
+### A6. Hardware Matrix
+
+For each target board, confirm:
+- Available buttons (count + DK indices)
+- Available LEDs (count)
+- Wi-Fi chip (onboard or shield)
+- Any pin conflicts with shields?
+
+### A7. Success Metrics
+
+Ask for 3–5 measurable metrics with targets, e.g.:
+- Build success rate
+- Connection time
+- Dashboard load time
+- Memory headroom
+
+---
+
+## Mode B — Add Feature
+
+1. Read the latest `docs/product/PRD-*.md`.
+2. Show the current feature list.
+3. Ask: *"Which feature would you like to add?"* (offer the table from A3 minus already-selected features)
+4. Ask user story + acceptance criteria + priority for the new feature.
+5. Ask: *"Does this feature require any changes to NFRs or the hardware matrix?"*
+6. Proceed to **Generate Output**.
+
+---
+
+## Mode C — Change Feature
+
+1. Read the latest `docs/product/PRD-*.md`.
+2. List the current functional requirements (FR-xxx) with their titles.
+3. Ask: *"Which requirement would you like to change?"*
+4. Show the current text and ask: *"What should change — the user story, acceptance criteria, priority, or all?"*
+5. Collect the changes interactively.
+6. Proceed to **Generate Output**.
+
+---
+
+## Mode D — Update (Code Changed, PRD Stale)
+
+Use this when the codebase has moved ahead of the PRD.
+
+### D1. Find the gap
+
+```bash
+# Get date of latest PRD
+LATEST_PRD=$(ls docs/product/PRD-*.md | sort | tail -1)
+PRD_DATE=$(echo "$LATEST_PRD" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}')
+
+# Show commits after that date
+git log --oneline --since="$PRD_DATE" -- src/ prj.conf CMakeLists.txt Kconfig boards/
+```
+
+### D2. Analyze changes
+
+For each changed file/module, summarize:
+- What was added, removed, or changed
+- Whether it affects any FR acceptance criteria
+- Whether any new features are now present in code but missing from PRD
+
+Present a summary table to the user:
+
+| File / Area | Change summary | PRD impact |
+|---|---|---|
+| `src/modules/wifi/` | Added P2P support | FR-003 needs new acceptance criteria |
+| `prj.conf` | Added `CONFIG_MDNS_RESPONDER=y` | New feature not in PRD |
+
+### D3. Confirm updates
+
+For each gap found, ask: *"Should this be reflected in the PRD?"*
+
+Collect user's answers before writing.
+
+---
+
+## Generate Output
+
+After any mode is complete:
+
+1. Determine today's date: `date +%Y-%m-%d`
+2. Write `docs/product/PRD-YYYY-MM-DD.md` using the full PRD structure below.
+3. If a previous PRD exists, add a **Changelog** section at the top listing what changed from the prior version.
+4. Print: *"PRD saved to `docs/product/PRD-YYYY-MM-DD.md`."*
+
+### PRD File Structure
+
+```markdown
+# Product Requirements Document — [Project Name]
+
+## Document Information
+- Product Name: ...
+- Version: YYYY-MM-DD
+- Previous Version: YYYY-MM-DD (link)
+- Status: Draft / Review / Approved
+- NCS Version: ...
+
+## Changelog
+| Version | Change summary |
+|---|---|
+| YYYY-MM-DD | Initial / Added X / Changed Y |
+
+## 1. Executive Summary
+### 1.1 Product Overview
+### 1.2 Problem Statement
+### 1.3 Target Users
+### 1.4 Success Metrics
+
+## 2. Product Requirements
+### 2.1 Feature Selection (table with selected features, config flags, Flash, RAM)
+### 2.2 Functional Requirements (P0/P1/P2, with spec links)
+### 2.3 Non-Functional Requirements
+### 2.4 Hardware Requirements (per-board matrix)
+### 2.5 User Experience Requirements (boot UX, mode selection UX, etc.)
+
+## 3. Architecture Overview
+(Pattern selected, high-level module map — NOT implementation detail)
+
+## 4. Release Criteria
+(List of P0 FRs that must all pass before release)
+
+## 5. Open Questions
+(Anything still unresolved)
+
+## 6. Engineering Spec References
+- [architecture.md](../engineering/specs/architecture.md)
+- [module-name.md](../engineering/specs/module-name.md) (one per module)
+```
+
+---
+
+## End-of-Workflow Prompt
+
+After saving the PRD, always ask:
+
+> "The PRD `docs/product/PRD-YYYY-MM-DD.md` is ready.
+>
+> Would you like to run **chsh-dev-project** now to:
+> - Update engineering specs in `docs/engineering/specs/` to match this PRD, and/or
+> - Implement or update the corresponding code?
+>
+> Reply **yes** to continue, or **no** to stop here."
+
+If the user says yes, hand off to `chsh-dev-project` with context:
+*"PRD is at `docs/product/PRD-YYYY-MM-DD.md`. Previous specs are in `docs/engineering/specs/`. Please update specs and implement according to the new PRD."*
+
+---
+
+## Reference: Feature Overlays
+
+Ready-to-use Kconfig overlays in `~/.claude/skills/chsh-pm-prd/overlays/`:
+
+| File | Feature |
+|---|---|
+| `overlay-wifi-shell.conf` | Wi-Fi shell commands |
+| `overlay-mqtt.conf` | MQTT over TLS |
+| `overlay-http-client.conf` | HTTP/HTTPS client |
+| `overlay-https-server.conf` | HTTPS server |
+| `overlay-coap.conf` | CoAP |
+| `overlay-tcp.conf` | TCP |
+| `overlay-udp.conf` | UDP |
+| `overlay-memfault.conf` | Memfault monitoring + OTA |
+| `overlay-ble-prov.conf` | BLE credential provisioning |
+| `overlay-smf-zbus.conf` | SMF + Zbus architecture |
+| `overlay-multithreaded.conf` | Multi-threaded architecture |
+
+PRD template: `~/.claude/skills/chsh-pm-prd/prd/PRD_TEMPLATE.md`

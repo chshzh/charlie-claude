@@ -1,5 +1,5 @@
 ---
-name: MessageReviewer
+name: chsh-txt-review
 description: Polish replies to customers or colleagues to be friendly, professional, and easy to understand. Use when drafting emails, messages, or responses that need to be clear and professional.
 ---
 

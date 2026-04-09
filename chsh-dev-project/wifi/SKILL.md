@@ -1,6 +1,6 @@
 ````skill
 ---
-name: ncs-wifi
+name: chsh-dev-project/wifi
 description: Wi-Fi development for Nordic nRF Connect SDK - station, SoftAP, P2P, and raw packet modes
 parent: ncs-project
 ---

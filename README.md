@@ -49,15 +49,11 @@ Checklists, report templates, and automation scripts for validating builds again
 	- [QA_TEMPLATE.md](chsh-pm-review/QA_TEMPLATE.md)
 	- [check_project.sh](chsh-pm-review/check_project.sh)
 
-### Linguist Skills
+### Writing Skills
 
-#### `chsh-norsk-teach` — Norwegian Teacher
-Vocabulary, grammar explanations, and example sentences for learning Norwegian.
-- Entry: [SKILL.md](chsh-norsk-teach/SKILL.md)
-
-#### `chsh-norsk-medling` — Message Reviewer
+#### `chsh-txt-review` — Text / Message Reviewer
 Polish replies to customers or colleagues: friendly, professional, clear.
-- Entry: [SKILL.md](chsh-norsk-medling/SKILL.md)
+- Entry: [SKILL.md](chsh-txt-review/SKILL.md)
 
 ---
 
@@ -93,8 +89,7 @@ skills/
 │   ├── prd/
 │   └── overlays/
 ├── chsh-pm-review/        Project review & QA
-├── chsh-norsk-teach/      Norwegian teaching
-├── chsh-norsk-medling/    Message review
+├── chsh-txt-review/       Text / message review
 ├── README.md
 └── .gitignore
 ```

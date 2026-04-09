@@ -1,5 +1,5 @@
 ---
-name: ncs-env-setup
+name: chsh-dev-project/env-setup
 description: Set up Nordic nRF Connect SDK (NCS) environment and run west commands. Use when building, flashing, or running any west command for nRF projects, or when working with Zephyr-based Nordic applications.
 ---
 
