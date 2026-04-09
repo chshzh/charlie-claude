@@ -33,13 +33,10 @@ Includes sub-skills for debug, env-setup, architecture patterns, protocols, and 
 
 ### Product Manager Skills
 
-#### `chsh-pm-prd` — PRD & Feature Planning
-PRD template, feature selection matrices, and configuration overlays for NCS projects.
+#### `chsh-pm-prd` — Interactive PRD Authoring
+Guides the Product Manager through creating and maintaining versioned PRD documents.
 - Entry: [SKILL.md](chsh-pm-prd/SKILL.md)
-- Key assets:
-	- [prd/PRD_TEMPLATE.md](chsh-pm-prd/prd/PRD_TEMPLATE.md)
-	- [FEATURE_SELECTION.md](chsh-pm-prd/FEATURE_SELECTION.md)
-	- [overlays/](chsh-pm-prd/overlays/) — ready-to-use Kconfig overlays
+- Template: [PRD_TEMPLATE.md](chsh-pm-prd/PRD_TEMPLATE.md)
 
 #### `chsh-pm-review` — NCS Project Review & QA
 Checklists, report templates, and automation scripts for validating builds against the PRD.
@@ -85,19 +82,20 @@ skills/
 │   ├── templates/
 │   ├── guides/
 │   └── examples/
-├── chsh-pm-prd/           PRD & feature planning
-│   ├── prd/
-│   └── overlays/
+├── chsh-pm-prd/           PRD authoring (SKILL.md + PRD_TEMPLATE.md)
 ├── chsh-pm-review/        Project review & QA
 ├── chsh-txt-review/       Text / message review
+├── NCS-Project-WORKFLOW.md  Cross-skill lifecycle reference
 ├── README.md
 └── .gitignore
 ```
 
 ## 🔄 Workflow Integration
 
+See [NCS-Project-WORKFLOW.md](NCS-Project-WORKFLOW.md) for the full four-phase lifecycle:
+
 ```
-PRD (chsh-pm-prd) → Generate (chsh-dev-project) → Develop → Review (chsh-pm-review) → QA Report → Fix → Improve
+chsh-pm-prd  →  PRD-YYYY-MM-DD.md  →  chsh-dev-project  →  docs/engineering/specs/  →  code  →  chsh-pm-review
 ```
 
 ## 📊 Token Efficiency
