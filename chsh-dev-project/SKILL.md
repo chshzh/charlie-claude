@@ -58,13 +58,26 @@ cp ~/.claude/skills/chsh-dev-project/overlays/overlay-<mode>.conf .
 
 ### A3. Implement each module
 
-For each spec in `docs/specs/` (skip `architecture.md`):
+Check the spec's **Module Type** field. Use the right pattern:
+
+**Application module** (SMF+Zbus or multi-threaded):
 
 1. Create `src/modules/<name>/` with:
-   - `<name>.c` — implementation following the state machine and API in the spec
+   - `<name>.c` — state machine or thread loop + Zbus integration
    - `<name>.h` — public API, types, channel declarations
    - `Kconfig.<name>` — module Kconfig following the spec's Kconfig table
    - `CMakeLists.txt` — `zephyr_library_sources` guarded by `CONFIG_APP_<MODULE>_MODULE`
+
+**Library wrapper module** (`app_<lib>/`):
+
+1. Create `src/modules/app_<lib>/` with:
+   - `app_<lib>.c` — library init (`SYS_INIT`), API calls, callback implementations,
+     and Zbus publishing for app lifecycle integration. See **Library Wrapper Modules** below.
+   - `app_<lib>.h` — public interface (if needed) guarded by Kconfig
+   - `Kconfig.app_<lib>` — `CONFIG_APP_<LIB>_MODULE=y`, must `select CONFIG_<LIB>`
+   - `CMakeLists.txt` — guarded by `CONFIG_APP_<LIB>_MODULE`
+
+For both types:
 
 2. Add module Kconfig to top-level `Kconfig`:
    ```kconfig
@@ -141,6 +154,8 @@ For each changed spec:
 | State machine change | Update SMF states/transitions in `<name>.c` |
 | Zbus channel added | Add channel definition in `<name>.h`, subscription in `<name>.c` |
 | New API function | Implement in `<name>.c`, declare in `<name>.h` |
+| Lib API call added/changed | Update `app_<lib>.c`; verify thread context and safety |
+| Lib callback signature changed | Update callback implementation in `app_<lib>.c` |
 | Module added | Follow Mode A steps for that module |
 | Module removed | Remove `src/modules/<name>/`, remove from `prj.conf`, `Kconfig`, `CMakeLists.txt` |
 
@@ -180,9 +195,41 @@ For bug fixes or minor adjustments that do not require spec changes.
 Always follow these rules when generating NCS/Zephyr code:
 
 ### Architecture
-- **SMF+Zbus**: each module is a `SYS_INIT`-registered state machine; communicates only via Zbus channels
-- **Multi-threaded**: each module has its own `k_thread`; communicates via message queues or semaphores
-- Never use global variables to share state between modules — use Zbus channels
+
+> **Scope**: the chosen architecture pattern (SMF+Zbus or multi-threaded) applies to
+> **application code only**. External libraries (Memfault SDK, Wi-Fi driver, BLE stack)
+> run in their own internal threads and are **not** subject to this pattern.
+> Wrapper modules (`app_<lib>/`) form the interface boundary.
+
+- **SMF+Zbus**: each application module is a `SYS_INIT`-registered state machine; communicates only via Zbus channels
+- **Multi-threaded**: each application module has its own `k_thread`; communicates via message queues or semaphores
+- Never use global variables to share state between application modules — use Zbus channels
+
+### Library Wrapper Modules (`app_<lib>/`)
+
+A wrapper module bridges an external library into the application architecture:
+
+1. **Call the library API** — initialise the library, configure it, and invoke its functions.
+   Match the call site to the thread context the library expects (check its documentation).
+2. **Implement library callbacks** — provide the callback/hook functions the library requires
+   (e.g. `memfault_metrics_heartbeat_collect_data()`). These run in the **library's thread context**,
+   not the application's. Keep them short; signal the app via a semaphore or Zbus message if
+   further work is needed.
+3. **Zbus integration** — subscribe to Zbus channels for app lifecycle events the library needs
+   (e.g. Wi-Fi connected → trigger upload). Publish Zbus messages when significant library events occur.
+4. **Thread safety** — do not access app-layer globals from inside a library callback without
+   proper synchronisation. Use `k_sem`, `k_mutex`, or atomic operations.
+5. **No SMF required** — library wrapper modules typically do not use a state machine; their
+   lifecycle is driven by library callbacks and Zbus events. Remove the State Machine section
+   from the spec if it does not apply.
+
+```
+src/modules/app_<lib>/
+├── app_<lib>.c         ← library init, API calls, callback implementations
+├── app_<lib>.h         ← public API (if any), Kconfig guard
+├── Kconfig.app_<lib>   ← CONFIG_APP_<LIB>_MODULE=y, selects CONFIG_<LIB>
+└── CMakeLists.txt      ← guarded by CONFIG_APP_<LIB>_MODULE
+```
 
 ### File structure (one module)
 ```
