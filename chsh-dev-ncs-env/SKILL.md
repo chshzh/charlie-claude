@@ -97,10 +97,11 @@ Replace:
 
 | Toolchain Version | Bundle ID   |
 |-------------------|-------------|
-| v2.6.0            | 580e4ef81c  |
-| v2.8.0            | 15b490767d  |
-| v3.1.1            | 561dce9adf  |
+| v3.2.4            | 185bb0e3b6  |
 | v3.2.0, v3.2.1    | 322ac893fe  |
+| v3.1.1            | 561dce9adf  |
+| v2.8.0            | 15b490767d  |
+| v2.6.0            | 580e4ef81c  |
 
 For unlisted versions, always look up in `/opt/nordic/ncs/toolchains/toolchains.json`.
 
