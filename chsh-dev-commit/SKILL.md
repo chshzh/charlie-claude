@@ -90,6 +90,26 @@ EOF
 - `sysbuild/` files — group by logical purpose (e.g. mcuboot config changes together)
 - Generated partition manager files (`pm/`, `*.map`) — separate `chore` commit or omit if not meaningful
 
+## Splitting Changes Within a Single File
+
+When one file contains two or more logically distinct changes that belong in separate commits (e.g. a bug fix + a new policy section), split them without interactive staging:
+
+1. Temporarily strip the *later* section from the file (Python or StrReplace)
+2. Stage and commit the *first* change
+3. Restore the stripped section
+4. Stage and commit the *second* change
+
+```python
+MARKER = "\n## Self-Update Policy\n"
+text = path.read_text()
+path.write_text(text[:text.find(MARKER)])  # strip later section
+# → git add + commit "fix: ..."
+path.write_text(text)                      # restore full content
+# → git add + commit "feat: ..."
+```
+
+**Why**: `git log -p <file>` then shows each logical change in its own commit — easier to bisect, review, or revert independently.
+
 ## Self-Update Policy
 
 At the **end of each conversation**, review what was discovered and check whether any facts in this skill are new, corrected, or outdated (e.g. new grouping patterns, NCS-specific file conventions, commit message conventions).
