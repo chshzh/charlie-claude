@@ -1,33 +1,28 @@
-# Git ignore for Claude Skills Repository
-
 # macOS
 .DS_Store
 .AppleDouble
 .LSOverride
 ._*
 
-# Temporary files
-*.swp
-*.swo
-*~
-.*.sw?
+# Claude auto-generated runtime data — do NOT track
+/debug/
+/projects/
+/session-env/
+/shell-snapshots/
+/plans/
+/todos/
+/statsig/
+/stats-cache.json
+/ide/
 
-# Editor directories
+# Editor
 .vscode/
 .idea/
 
-# Backup files
+# Temp/backup
+*.swp
+*.swo
+*~
 *.bak
 *.backup
 *.orig
-
-# Cache and build artifacts
-__pycache__/
-*.pyc
-*.pyo
-.pytest_cache/
-.mypy_cache/
-
-# Logs
-*.log
-logs/
