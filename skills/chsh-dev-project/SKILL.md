@@ -1,6 +1,6 @@
 ---
 name: chsh-dev-project
-description: Implement NCS project code from engineering specs in docs/specs/. Scaffolds new projects, implements modules, and updates code when specs change. Use when specs are ready and you need to write or update code. For generating specs, use chsh-dev-spec first.
+description: Implement NCS project code from engineering specs in docs/specs/. Scaffolds new projects, implements modules, and updates code when specs change. Use when specs are ready and the user needs to write or update code. For generating specs, use chsh-dev-spec first.
 ---
 
 # chsh-dev-project — Code Implementation Workflow
