@@ -1,6 +1,6 @@
 ````skill
 ---
-name: chsh-dev-project/protocols/webserver
+name: chsh-dev-ncs-project/protocols/webserver
 description: Static web server with HTML/CSS/JS, REST APIs, and WebSockets for Nordic NCS
 parent: ncs-protocols
 ---
@@ -40,8 +40,8 @@ Build complete web interfaces for Nordic devices with static resources, dynamic 
 ```bash
 # 1. Copy templates
 mkdir -p src/static_web_resources
-cp ~/.claude/skills/chsh-dev-project/protocols/webserver/templates/* src/
-cp ~/.claude/skills/chsh-dev-project/protocols/webserver/overlay-static-webserver.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/protocols/webserver/templates/* src/
+cp ~/.claude/skills/chsh-dev-ncs-project/protocols/webserver/overlay-static-webserver.conf .
 
 # 2. Create web files in src/static_web_resources/
 #    - index.html

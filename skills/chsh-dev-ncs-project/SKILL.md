@@ -1,9 +1,9 @@
 ---
-name: chsh-dev-project
+name: chsh-dev-ncs-project
 description: Implement NCS project code from engineering specs in docs/specs/. Scaffolds new projects, implements modules, and updates code when specs change. Use when specs are ready and the user needs to write or update code. For generating specs, use chsh-dev-spec first.
 ---
 
-# chsh-dev-project — Code Implementation Workflow
+# chsh-dev-ncs-project — Code Implementation Workflow
 
 Implements NCS project code from the engineering specs in `docs/specs/`.
 Specs are the contract — **always read the spec before writing code**.
@@ -48,12 +48,12 @@ Load:
 mkdir -p src/modules docs/specs
 
 # Base templates
-cp ~/.claude/skills/chsh-dev-project/templates/LICENSE .
-cp ~/.claude/skills/chsh-dev-project/templates/.gitignore .
-cp ~/.claude/skills/chsh-dev-project/templates/README_TEMPLATE.md README.md
+cp ~/.claude/skills/chsh-dev-ncs-project/templates/LICENSE .
+cp ~/.claude/skills/chsh-dev-ncs-project/templates/.gitignore .
+cp ~/.claude/skills/chsh-dev-ncs-project/templates/README_TEMPLATE.md README.md
 
 # Wi-Fi config (pick from spec)
-cp ~/.claude/skills/chsh-dev-project/overlays/overlay-<mode>.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/overlays/overlay-<mode>.conf .
 ```
 
 ### A3. Implement each module
@@ -127,7 +127,7 @@ Fix build errors. Verify that UART output matches the test points listed in each
 
 ### A6. Handoff
 
-> "Implementation complete. Run **chsh-qa-test** to validate against PRD and specs."
+> "Implementation complete. Run **chsh-qa-ncs-test** to validate against PRD and specs."
 
 ---
 
@@ -174,7 +174,7 @@ Verify that UART output still matches the test points in each spec (including un
 
 ### B5. Handoff
 
-> "Implementation updated. Run **chsh-qa-test** to validate the new build."
+> "Implementation updated. Run **chsh-qa-ncs-test** to validate the new build."
 
 ---
 
@@ -321,7 +321,7 @@ Copy these from the `ncs-project-logo` reference project:
 ## Reference: Wi-Fi Config Files
 
 ```bash
-~/.claude/skills/chsh-dev-project/overlays/
+~/.claude/skills/chsh-dev-ncs-project/overlays/
 ├── overlay-wifi-sta.conf       # Station mode
 ├── overlay-wifi-softap.conf    # SoftAP mode
 ├── overlay-wifi-p2p.conf       # P2P / Wi-Fi Direct
@@ -331,11 +331,11 @@ Copy these from the `ncs-project-logo` reference project:
 ## Reference: Architecture Templates
 
 ```bash
-~/.claude/skills/chsh-dev-project/architecture/smf-zbus/
+~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/
 ├── templates/          # module_template_smf.c/h, Kconfig.module_template, messages.h
 └── modules/            # button_example/, sensor_example/ (ready to copy)
 
-~/.claude/skills/chsh-dev-project/architecture/simple-multithreaded/
+~/.claude/skills/chsh-dev-ncs-project/architecture/simple-multithreaded/
 └── templates/          # module_template_simple.c/h, Kconfig.module_template_simple
 ```
 
@@ -351,12 +351,12 @@ Copy these from the `ncs-project-logo` reference project:
 
 | Sub-skill | When to load |
 |-----------|-------------|
-| `chsh-dev-project/debug` | Debugging crashes, RTT logging, GDB |
-| `chsh-dev-project/env-setup` | Toolchain setup, west init/update |
-| `chsh-dev-project/architecture` | Architecture pattern selection and templates |
-| `chsh-dev-project/protocols` | MQTT, CoAP, HTTP, TCP/UDP details |
-| `chsh-dev-project/protocols/webserver` | Static HTTP server, REST API patterns |
-| `chsh-dev-project/wifi` | Wi-Fi STA/SoftAP/P2P implementation details |
+| `chsh-dev-ncs-project/debug` | Debugging crashes, RTT logging, GDB |
+| `chsh-dev-ncs-project/env-setup` | Toolchain setup, west init/update |
+| `chsh-dev-ncs-project/architecture` | Architecture pattern selection and templates |
+| `chsh-dev-ncs-project/protocols` | MQTT, CoAP, HTTP, TCP/UDP details |
+| `chsh-dev-ncs-project/protocols/webserver` | Static HTTP server, REST API patterns |
+| `chsh-dev-ncs-project/wifi` | Wi-Fi STA/SoftAP/P2P implementation details |
 
 ## Critical Requirements (NCS Wi-Fi projects)
 

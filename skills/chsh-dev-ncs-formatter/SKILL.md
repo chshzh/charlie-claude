@@ -1,5 +1,5 @@
 ---
-name: chsh-dev-formatter
+name: chsh-dev-ncs-formatter
 description: Format C/C++ source files using the clang-format binary from the active NCS toolchain. Use when the user asks to format code, run clang-format, fix formatting, or clean up a file or folder in an NCS/Zephyr project.
 ---
 

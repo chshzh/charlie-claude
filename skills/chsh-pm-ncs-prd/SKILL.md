@@ -1,9 +1,9 @@
 ---
-name: chsh-pm-prd
+name: chsh-pm-ncs-prd
 description: Interactive PRD authoring for NCS IoT projects. Guides the Product Manager through creating, extending, or updating PRD.md under docs/. No coding knowledge required. Use when creating a new PRD, adding or changing a feature, or syncing the PRD after code changes.
 ---
 
-# chsh-pm-prd — Interactive PRD Workflow
+# chsh-pm-ncs-prd — Interactive PRD Workflow
 
 This skill is for the **Product Manager** role. It asks questions in plain language
 and maintains a single `PRD.md` in `docs/` with a built-in revision history table.
@@ -182,7 +182,7 @@ After saving the PRD, always ask:
 > "The PRD is updated at `docs/PRD.md` (see Revision History for this change).
 >
 > Would you like to hand off to **chsh-dev-spec** to update the engineering specs,
-> or to **chsh-dev-project** to implement or update the code?
+> or to **chsh-dev-ncs-project** to implement or update the code?
 >
 > Reply **design**, **implement**, or **no** to stop here."
 

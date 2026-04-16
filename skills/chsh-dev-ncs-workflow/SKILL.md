@@ -1,9 +1,9 @@
 ---
-name: chsh-ncs-workflow
+name: chsh-dev-ncs-workflow
 description: Orchestrates the full NCS project lifecycle. Detects where a project stands, guides through each phase (PRD → Specs → Code → QA+Test), and routes feedback back to the right phase. Use as the single entry point for any NCS project work.
 ---
 
-# chsh-ncs-workflow — NCS Project Lifecycle Orchestrator
+# chsh-dev-ncs-workflow — NCS Project Lifecycle Orchestrator
 
 Single entry point for any NCS project work. Scans the project state, presents a
 status dashboard, and guides you through each phase — invoking the right skill at each step.
@@ -14,7 +14,7 @@ status dashboard, and guides you through each phase — invoking the right skill
 
 ```
 ┌────────────────────────────────────────────────────────────────┐
-│  PHASE 1 — PRODUCT DEFINITION         skill: chsh-pm-prd       │
+│  PHASE 1 — PRODUCT DEFINITION         skill: chsh-pm-ncs-prd       │
 │                                                                 │
 │  Product Manager defines device requirements:                  │
 │  • What should the device do, for whom, and why?               │
@@ -42,7 +42,7 @@ status dashboard, and guides you through each phase — invoking the right skill
                             │ Specs approved → triggers Phase 3
                             ▼
 ┌────────────────────────────────────────────────────────────────┐
-│  PHASE 3 — IMPLEMENTATION             skill: chsh-dev-project  │
+│  PHASE 3 — IMPLEMENTATION             skill: chsh-dev-ncs-project  │
 │                                                                 │
 │  Developer Engineer implements code from specs:                │
 │  • src/modules/<name>/ per module                              │
@@ -56,7 +56,7 @@ status dashboard, and guides you through each phase — invoking the right skill
                             │ Implementation done → triggers Phase 4
                             ▼
 ┌────────────────────────────────────────────────────────────────┐
-│  PHASE 4 — QA & FUNCTIONAL TEST       skill: chsh-qa-test    │
+│  PHASE 4 — QA & FUNCTIONAL TEST       skill: chsh-qa-ncs-test    │
 │                                                                 │
 │  Test Report (always):                                         │
 │  • One TC per PRD acceptance criterion, UART evidence          │
@@ -120,14 +120,14 @@ Ask: *"Where would you like to start?"* — or proceed with the recommended step
 
 ---
 
-## Phase 1 — Product Definition  `skill: chsh-pm-prd`
+## Phase 1 — Product Definition  `skill: chsh-pm-ncs-prd`
 
 **Enter Phase 1 when:**
 - No PRD exists yet (new project or undocumented existing project)
 - A feature is being added or changed
 - Code changed but PRD was not updated
 
-**Run:** Load skill **chsh-pm-prd** and follow its workflow.
+**Run:** Load skill **chsh-pm-ncs-prd** and follow its workflow.
 
 **Output:** `docs/PRD.md` with new Changelog entry
 
@@ -152,11 +152,11 @@ Ask: *"Where would you like to start?"* — or proceed with the recommended step
 Each spec's `PRD Version` field must match the latest PRD Changelog timestamp.
 
 **On completion**, ask:
-> "Specs are ready. Proceed to **Phase 3 — Implementation** with chsh-dev-project? (yes / stop)"
+> "Specs are ready. Proceed to **Phase 3 — Implementation** with chsh-dev-ncs-project? (yes / stop)"
 
 ---
 
-## Phase 3 — Implementation  `skill: chsh-dev-project`
+## Phase 3 — Implementation  `skill: chsh-dev-ncs-project`
 
 **⛔ Phase 3 guard — check before touching `src/`:**
 Before writing any code, verify that all agreed design changes are captured in docs.
@@ -171,7 +171,7 @@ A user saying "start implementation" does **not** bypass this guard.
 - Specs were updated and code needs to catch up
 - A bug fix is needed (no spec change)
 
-**Run:** Load skill **chsh-dev-project** and follow its workflow.
+**Run:** Load skill **chsh-dev-ncs-project** and follow its workflow.
 
 **Outputs:**
 - `src/modules/<name>/` — one per spec module
@@ -180,18 +180,18 @@ A user saying "start implementation" does **not** bypass this guard.
 - Passing `west build`
 
 **On completion**, ask:
-> "Implementation done. Proceed to **Phase 4 — QA & Test** with chsh-qa-test? (yes / stop)"
+> "Implementation done. Proceed to **Phase 4 — QA & Test** with chsh-qa-ncs-test? (yes / stop)"
 
 ---
 
-## Phase 4 — QA & Test  `skill: chsh-qa-test`
+## Phase 4 — QA & Test  `skill: chsh-qa-ncs-test`
 
 **Enter Phase 4 when:**
 - Implementation is complete or updated
 - Before any release or demo
 - After any merge to main
 
-**Run:** Load skill **chsh-qa-test** and follow its workflow.
+**Run:** Load skill **chsh-qa-ncs-test** and follow its workflow.
 
 | Document | When | Hardware? |
 |----------|------|-----------|
@@ -281,13 +281,13 @@ docs/QA-2026-04-09-14-30.md
 
 | Skill | Invoke when | Output |
 |-------|-------------|--------|
-| `chsh-ncs-workflow` | **Starting any project work** | Status dashboard + phase guidance |
-| `chsh-pm-prd` | Defining or updating product requirements | `docs/PRD.md` |
+| `chsh-dev-ncs-workflow` | **Starting any project work** | Status dashboard + phase guidance |
+| `chsh-pm-ncs-prd` | Defining or updating product requirements | `docs/PRD.md` |
 | `chsh-dev-spec` | Translating PRD to engineering specs | `docs/specs/*.md` |
-| `chsh-dev-project` | Implementing code from specs | `src/`, `prj.conf`, passing build |
-| `chsh-qa-test` | Validating a build against PRD and specs | `TEST-*.md` + `QA-*.md` |
-| `chsh-git-commit` | Preparing git commits | Clean, logical commit history |
-| `chsh-dev-mem-opt` | Diagnosing memory usage | Heap / stack recommendations |
+| `chsh-dev-ncs-project` | Implementing code from specs | `src/`, `prj.conf`, passing build |
+| `chsh-qa-ncs-test` | Validating a build against PRD and specs | `TEST-*.md` + `QA-*.md` |
+| `chsh-dev-git-commit` | Preparing git commits | Clean, logical commit history |
+| `chsh-dev-ncs-memory` | Diagnosing memory usage | Heap / stack recommendations |
 
 ## Self-Update Policy
 

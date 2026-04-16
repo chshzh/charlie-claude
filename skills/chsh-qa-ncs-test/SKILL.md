@@ -1,9 +1,9 @@
 ---
-name: chsh-qa-test
+name: chsh-qa-ncs-test
 description: Phase 4 of the NCS project lifecycle. Generates a Test Report (PRD acceptance criteria pass/fail, hardware required, always) and optionally a QA Report (code quality 0-100, no hardware, release/demo only). Use when validating a build against PRD and specs.
 ---
 
-# chsh-qa-test — QA & Functional Test
+# chsh-qa-ncs-test — QA & Functional Test
 
 Phase 4 of the NCS project lifecycle. Validates that the implementation is both
 well-built (QA Report) and behaves as the PRD requires (Test Report).
@@ -165,9 +165,9 @@ Then ask:
 ## Related Skills
 
 - `chsh-ncs-workflow` — full lifecycle orchestrator; routes back here after Phase 3
-- `chsh-pm-prd` — update `docs/PRD.md` if requirements need changing
+- `chsh-pm-ncs-prd` — update `docs/PRD.md` if requirements need changing
 - `chsh-dev-spec` — update `docs/specs/` if design gaps are found
-- `chsh-dev-project` — fix code for P0 issues
+- `chsh-dev-ncs-project` — fix code for P0 issues
 
 ## Self-Update Policy
 

@@ -1,5 +1,5 @@
 ---
-name: chsh-git-commit
+name: chsh-dev-git-commit
 description: Plans, groups, and executes git commits. Inspects the worktree, proposes a commit plan grouped by logical change, waits for approval, then stages and commits. Supports Conventional Commits (user app repos) and Zephyr style (NCS/Zephyr repos). Use when the user asks to prepare commits, commit changes, or split work into multiple git commits.
 ---
 

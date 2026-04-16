@@ -1,6 +1,6 @@
 ````skill
 ---
-name: chsh-dev-project/architecture
+name: chsh-dev-ncs-project/architecture
 description: Architecture patterns for Nordic NCS projects - simple multi-threaded vs SMF+zbus modular
 parent: ncs-project
 ---
@@ -16,8 +16,8 @@ Choose the right architecture for your Nordic NCS project.
 **Best for**: 1-3 threads, simple control flow, quick prototypes
 
 ```bash
-cp ~/.claude/skills/chsh-dev-project/architecture/simple-multithreaded/templates/* src/
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-multithreaded.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/architecture/simple-multithreaded/templates/* src/
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-multithreaded.conf .
 ```
 
 **Features**:
@@ -35,15 +35,15 @@ cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-multithreaded.conf .
 
 ```bash
 # Copy example modules (choose what you need)
-cp -r ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/button_example src/modules/button
-cp -r ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/sensor_example src/modules/sensor
-cp -r ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/data_processor_example src/modules/data_processor
+cp -r ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/button_example src/modules/button
+cp -r ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/sensor_example src/modules/sensor
+cp -r ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/data_processor_example src/modules/data_processor
 
 # Copy common message definitions
-cp ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/common/messages.h src/modules/
+cp ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/common/messages.h src/modules/
 
 # Copy configuration overlay
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-smf-zbus.conf .
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-smf-zbus.conf .
 ```
 
 **Features**:
@@ -112,7 +112,7 @@ Each module is **production-ready** and follows Nordic's best practices from Ass
 ### Simple Multi-Threaded
 ```bash
 # Copy template and build
-cp ~/.claude/skills/chsh-dev-project/architecture/simple-multithreaded/templates/* src/
+cp ~/.claude/skills/chsh-dev-ncs-project/architecture/simple-multithreaded/templates/* src/
 west build -p -b nrf7002dk/nrf5340/cpuapp -- \
   -DEXTRA_CONF_FILE="overlay-multithreaded.conf"
 ```
@@ -123,9 +123,9 @@ west build -p -b nrf7002dk/nrf5340/cpuapp -- \
 mkdir -p src/modules
 
 # 2. Copy example modules (customize module names as needed)
-cp -r ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/button_example src/modules/button
-cp -r ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/sensor_example src/modules/sensor
-cp ~/.claude/skills/chsh-dev-project/architecture/smf-zbus/modules/common/messages.h src/modules/
+cp -r ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/button_example src/modules/button
+cp -r ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/sensor_example src/modules/sensor
+cp ~/.claude/skills/chsh-dev-ncs-project/architecture/smf-zbus/modules/common/messages.h src/modules/
 
 # 3. In your main CMakeLists.txt, add:
 #    add_subdirectory(src/modules/button)

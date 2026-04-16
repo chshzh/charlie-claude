@@ -1,6 +1,6 @@
 ````skill
 ---
-name: chsh-dev-project/wifi
+name: chsh-dev-ncs-project/wifi
 description: Wi-Fi development for Nordic nRF Connect SDK - station, SoftAP, P2P, and raw packet modes
 parent: ncs-project
 ---
@@ -15,22 +15,22 @@ Complete Wi-Fi support for Nordic nRF70-series devices.
 
 **Station Mode** (Connect to Access Point):
 ```bash
-cp ~/.claude/skills/chsh-dev-project/wifi/configs/wifi-sta.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/wifi/configs/wifi-sta.conf .
 ```
 
 **SoftAP Mode** (Create Access Point):
 ```bash
-cp ~/.claude/skills/chsh-dev-project/wifi/configs/wifi-softap.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/wifi/configs/wifi-softap.conf .
 ```
 
 **P2P Mode** (Wi-Fi Direct):
 ```bash
-cp ~/.claude/skills/chsh-dev-project/wifi/configs/wifi-p2p.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/wifi/configs/wifi-p2p.conf .
 ```
 
 **Raw Packet Mode** (Monitor/Promiscuous):
 ```bash
-cp ~/.claude/skills/chsh-dev-project/wifi/configs/wifi-raw.conf .
+cp ~/.claude/skills/chsh-dev-ncs-project/wifi/configs/wifi-raw.conf .
 ```
 
 ## 📖 Documentation

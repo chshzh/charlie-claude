@@ -1,6 +1,6 @@
 ````skill
 ---
-name: chsh-dev-project/protocols
+name: chsh-dev-ncs-project/protocols
 description: Network protocols for Nordic NCS - MQTT, HTTP, CoAP, UDP, TCP, WebServer
 parent: ncs-project
 ---
@@ -25,7 +25,7 @@ Complete protocol support for Nordic NCS projects.
 Industrial IoT messaging protocol
 
 ```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-mqtt.conf .
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-mqtt.conf .
 ```
 
 **Features**: QoS 0/1/2, TLS, Last Will, persistent sessions  
@@ -36,7 +36,7 @@ cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-mqtt.conf .
 RESTful API calls and web services
 
 ```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-http-client.conf .
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-http-client.conf .
 ```
 
 **Features**: GET/POST/PUT/DELETE, HTTPS (TLS), chunked encoding  
@@ -47,7 +47,7 @@ cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-http-client.conf .
 Constrained Application Protocol for IoT
 
 ```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-coap.conf .
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-coap.conf .
 ```
 
 **Features**: UDP-based, block transfer, observe, DTLS  
@@ -58,7 +58,7 @@ cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-coap.conf .
 Reliable stream protocol
 
 ```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-tcp.conf .
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-tcp.conf .
 ```
 
 **Features**: Reliable, ordered delivery, connection-oriented  
@@ -69,7 +69,7 @@ cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-tcp.conf .
 Fast datagram protocol
 
 ```bash
-cp ~/.claude/skills/chsh-pm-prd/overlays/overlay-udp.conf .
+cp ~/.claude/skills/chsh-pm-ncs-prd/overlays/overlay-udp.conf .
 ```
 
 **Features**: Low latency, connectionless, broadcast/multicast  

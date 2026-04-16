@@ -7,7 +7,7 @@ description: Translate an approved PRD into engineering specs under docs/specs/.
 
 Turns the product requirements in `docs/PRD.md` into the engineering specifications
 that drive implementation. Specs live in `docs/specs/` and are the contract
-between design (this skill) and implementation (`chsh-dev-project`).
+between design (this skill) and implementation (`chsh-dev-ncs-project`).
 
 ---
 
@@ -49,7 +49,7 @@ Load `docs/PRD.md`. Extract:
 - Non-functional requirements: memory headroom, latency targets, security notes
 
 If no PRD exists, stop:
-> "No PRD found at `docs/PRD.md`. Please run **chsh-pm-prd** first."
+> "No PRD found at `docs/PRD.md`. Please run **chsh-pm-ncs-prd** first."
 
 ### A2. Plan the spec set
 
@@ -166,7 +166,7 @@ After all specs are generated:
 1. Present a summary table of all files created.
 2. Ask the user to review and approve the specs.
 3. Remind the user:
-   > "Specs are ready. Run **chsh-dev-project** to scaffold the project and implement the code."
+   > "Specs are ready. Run **chsh-dev-ncs-project** to scaffold the project and implement the code."
 
 ---
 
@@ -205,7 +205,7 @@ Always update `overview.md`:
 
 ### B4. Handoff
 
-> "Specs updated. Review the changes, then run **chsh-dev-project** to update the implementation."
+> "Specs updated. Review the changes, then run **chsh-dev-ncs-project** to update the implementation."
 
 ---
 
