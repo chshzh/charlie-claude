@@ -17,6 +17,56 @@ These can differ! Example: NCS main branch + v3.2.1 toolchain.
 
 **ALWAYS check if the NCS environment is set up before running any `west` command.**
 
+## nrfutil Command Wrapper (Preferred)
+
+The canonical way to run any `west`, `cmake`, or `ninja` command within the correct toolchain:
+
+```sh
+nrfutil sdk-manager toolchain launch --ncs-version=<version> -- <command>
+```
+
+Example — build with the v3.2.4 toolchain:
+```sh
+nrfutil sdk-manager toolchain launch --ncs-version=v3.2.4 -- \
+  west build -b nrf7002dk/nrf5340/cpuapp -d /path/to/app/build /path/to/app
+```
+
+> **Note:** `nrfutil` itself does **not** need this wrapper — only `west`/`cmake`/`ninja` do.
+
+Legacy alternative (if `sdk-manager` is unavailable):
+```sh
+nrfutil toolchain-manager launch --ncs-version=<version> -- <command>
+```
+
+The **direct PATH approach** (existing workflow below) is equivalent and useful for
+multi-command terminal sessions where you want to keep the environment active.
+
+## Board Target Reference
+
+Always use the **fully qualified** board target (`<board>/<soc>[/<variant>]`).
+
+| DK | Board target |
+|---|---|
+| nRF52840 DK | `nrf52840dk/nrf52840` |
+| nRF5340 DK | `nrf5340dk/nrf5340/cpuapp` |
+| nRF54L15 DK | `nrf54l15dk/nrf54l15/cpuapp` |
+| nRF54L15 DK (TF-M / non-secure) | `nrf54l15dk/nrf54l15/cpuapp/ns` |
+| nRF54L10 DK | `nrf54l15dk/nrf54l10/cpuapp` |
+| nRF7002 DK | `nrf7002dk/nrf5340/cpuapp` |
+| nRF9151 DK (TF-M / non-secure) | `nrf9151dk/nrf9151/ns` |
+| Thingy:53 | `thingy53/nrf5340/cpuapp` |
+
+For devicetree overlay filenames, replace slashes with underscores:
+`nrf54l15dk/nrf54l15/cpuapp` → `nrf54l15dk_nrf54l15_cpuapp.overlay`
+
+List all valid targets: `west boards` (inside the toolchain environment).
+
+## Build Directory Convention
+
+- **Always pass `-d <path-to-app>/build`** to keep build artifacts inside the app folder.
+- Pass `-d` explicitly when running outside the app directory to avoid creating `build/` in cwd.
+- Use `-p` (pristine) whenever the board, sysbuild config, overlays, or toolchain changed.
+
 ## Workflow for West Commands
 
 When the user requests any west command (`west build`, `west flash`, `west update`, etc.):
@@ -92,6 +142,19 @@ west <command>
 Replace:
 - `<BUNDLE_ID>`: From toolchain version lookup
 - `<SDK_PATH>`: User-specified SDK location (e.g., `/opt/nordic/ncs/v3.2.1` or `/opt/nordic/ncs/main`)
+
+### Sysbuild (NCS v2.7+)
+
+Modern NCS enables **sysbuild** by default for many boards. Sysbuild produces multi-image outputs
+(`mcuboot`, `merged.hex`, etc.). Control it explicitly when needed:
+
+```sh
+west build --sysbuild    # force sysbuild on
+west build --no-sysbuild # force single-image build
+```
+
+Check for `sysbuild.conf` or `Kconfig.sysbuild` in the project — these indicate a sysbuild project.
+Never force `--no-sysbuild` on a project that ships `sysbuild.conf` without checking with the user.
 
 ## Common Toolchain Bundle IDs
 
@@ -307,6 +370,39 @@ git push
 ```
 
 The hook will display "Run push hook" and any validation errors before allowing the push.
+
+## Device Discovery and Selection
+
+Always start device operations with:
+```sh
+nrfutil device list
+```
+
+- **No devices found**: ask the user to connect/power the board, then retry.
+- **One device**: use it automatically.
+- **Multiple devices**: ask the user which to use (board name, SEGGER serial number, or explicit choice).
+- Pass `--dev-id <segger_id>` to `west flash` / `west debug` when multiple boards are connected.
+
+## VCOM Port Defaults (UART Logging)
+
+Default UART settings: 115200 8N1, no flow control.
+
+Nordic DKs expose multiple VCOM ports via the J-Link interface MCU. The `zephyr,console` chosen
+node determines which UART carries application logs (default: `uart0` → Serial Port 0).
+
+| DK | Serial Port 0 (first ttyACM/COM) | Serial Port 1 (second ttyACM/COM) |
+|---|---|---|
+| nRF52840 DK | Application logs (`uart0`) | Unused by default |
+| nRF5340 DK | App core logs (`uart0`, VCOM0) | Network core / secondary (`uart1`) |
+| nRF54L* DK | App logs (`uart1`, pins P1.04–P1.07) | Secondary (`uart0`, pins P0.00–P0.03) |
+
+If no logs appear on the first port, try the second and reset the board.
+Applications can reassign `zephyr,console` via an overlay — do not assume the default mapping.
+
+### DTR Requirement
+
+Nordic DK UART lines are tri-stated until the terminal asserts **DTR (Data Terminal Ready)**.
+If the port opens but no data appears after a board reset, the terminal tool is not asserting DTR.
 
 ## Notes
 
