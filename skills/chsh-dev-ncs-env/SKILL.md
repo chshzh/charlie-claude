@@ -205,9 +205,26 @@ cd /path/to/project && west build -b <board> -p
 
 ## Troubleshooting
 
-### `west update` Git errors
+### Permanent fix: toolchain git priority (VS Code extension terminals)
 
-If `west update` fails with Git messages such as “did not send all necessary objects” or “unknown option detach”, prepend toolchain `bin` and retry:
+The nRF Connect extension sets `GIT_EXEC_PATH` correctly but **appends** the toolchain
+bin to PATH, so `/usr/bin/git` wins over the toolchain git. Add to `~/.zshrc`:
+
+```sh
+if [[ -n "$NRF_CONNECT_VSCODE" && -n "$GIT_EXEC_PATH" ]]; then
+  _nrf_root="${GIT_EXEC_PATH%%/Cellar/*}"
+  [[ -d "$_nrf_root/bin" ]] && export PATH="$_nrf_root/bin:$PATH"
+  unset _nrf_root
+fi
+```
+
+This derives the toolchain root from the already-set `GIT_EXEC_PATH`, is version-agnostic,
+and only activates in extension-opened terminals (`NRF_CONNECT_VSCODE=1`).
+
+### `west update` Git errors (manual / one-shot fix)
+
+If `west update` fails with "did not send all necessary objects" or "unknown option detach"
+in a terminal where the permanent fix above is not yet in place:
 
 ```sh
 export PATH="/opt/nordic/ncs/toolchains/185bb0e3b6/bin:$PATH"
