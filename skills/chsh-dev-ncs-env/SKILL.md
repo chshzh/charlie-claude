@@ -224,6 +224,9 @@ Inside the off/on block you can keep the `checkpatch`-approved layout (same-line
 
 **Solution:** Disable verification in the nrfutil runner.
 
+> ⚠️ **Warning:** This modifies a file inside the SDK installation. The change will be
+> overwritten when the SDK is updated or reinstalled. Re-apply it after every SDK update.
+
 **Steps:**
 
 1. Navigate to the runner script in your SDK:
@@ -246,8 +249,6 @@ Inside the off/on block you can keep the `checkpatch`-approved layout (same-line
 ```
 /opt/nordic/ncs/v3.2.1/zephyr/scripts/west_commands/runners/nrf_common.py
 ```
-
-**Note:** This change persists across flashing operations until you update/reinstall the SDK.
 
 ### Git Pre-Push Hook for Code Quality
 

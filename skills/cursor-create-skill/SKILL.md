@@ -1,5 +1,5 @@
 ---
-name: create-skill
+name: cursor-create-skill
 description: >-
   Guides users through creating effective Agent Skills for Cursor. Use when you
   want to create, write, or author a new skill, or asks about skill structure,

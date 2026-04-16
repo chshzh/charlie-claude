@@ -120,7 +120,7 @@ After generating the report(s), present a combined summary:
 
 Then ask:
 > "Review complete. Route P0 issues back to the appropriate phase?
-> Reply **yes** to continue with chsh-ncs-workflow, or **no** to stop here."
+> Reply **yes** to continue with chsh-dev-ncs-workflow, or **no** to stop here."
 
 ---
 
@@ -164,7 +164,7 @@ Then ask:
 
 ## Related Skills
 
-- `chsh-ncs-workflow` — full lifecycle orchestrator; routes back here after Phase 3
+- `chsh-dev-ncs-workflow` — full lifecycle orchestrator; routes back here after Phase 3
 - `chsh-pm-ncs-prd` — update `docs/PRD.md` if requirements need changing
 - `chsh-dev-spec` — update `docs/specs/` if design gaps are found
 - `chsh-dev-ncs-project` — fix code for P0 issues
