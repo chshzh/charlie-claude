@@ -1,192 +1,257 @@
-# Project Name
+# <Project Name>
 
-![Build Status](https://github.com/username/project-name/actions/workflows/build.yml/badge.svg)
-![Nordic Semiconductor](https://img.shields.io/badge/Nordic%20Semiconductor-nRF7002-blue)
-![NCS Version](https://img.shields.io/badge/NCS-v3.2.1-green)
-![Platform](https://img.shields.io/badge/Platform-nRF7002%20DK-orange)
-![License](https://img.shields.io/badge/License-LicenseRef--Nordic--5--Clause-lightgrey)
+<!--
+README QUALITY TARGETS
+  Reading time:  3–5 min for Evaluator Quick Start path | 8–12 min for full document
+  Character count:  3,000–7,000 characters (excluding code blocks)
+  Principle: cognitive funnel — broad → narrow. Evaluator should reach
+  a working device by the end of Evaluator Quick Start without scrolling past it.
+-->
 
-> **Brief one-line description of your project**
+[![Build](https://github.com/<org>/<repo>/actions/workflows/build.yml/badge.svg)](https://github.com/<org>/<repo>/actions/workflows/build.yml)
+[![License](https://img.shields.io/badge/License-LicenseRef--Nordic--5--Clause-blue.svg)](LICENSE)
+[![NCS](https://img.shields.io/badge/NCS-v3.x.x-skyblue)](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/index.html)
 
-## 🔍 Overview
+<One sentence describing what the device does and for whom.>
 
-Comprehensive description of what your project does, the problem it solves, and its use cases.
+![Screenshot or demo of the device in action](docs/images/screenshot.png)
 
-### 🎯 Key Features
+---
 
-- **Feature 1**: Description
-- **Feature 2**: Description
-- **Feature 3**: Description
-- **Feature 4**: Description
+## Project Overview
 
-## 🔧 Hardware Requirements
+### Introduction
 
-### Essential Hardware (MUST)
-- **Development Board**: Board name (Quantity)
-- **Additional Hardware**: e.g., Wi-Fi shield, sensors (Quantity)
-- **NCS Version**: vX.X.X
-- **Cables**: Type and quantity
+<Two to three sentences: what problem this solves, who the target user is, and what makes it distinctive.>
 
-### Optional Hardware
-- **Item 1**: Purpose and use case
-- **Item 2**: Purpose and use case
+### Supported hardware
 
-## 🏗️ Project Architecture
+| Board | Build target |
+|-------|--------------|
+| &lt;Board A&gt; | `<target/cpuapp>` |
+| &lt;Board B&gt; + &lt;Shield&gt; | `<target/cpuapp>` + `-DSHIELD=<shield>` |
+
+### Features
+
+- **&lt;Feature 1&gt;** — brief description
+- **&lt;Feature 2&gt;** — brief description
+- **&lt;Feature 3&gt;** — brief description
+- **&lt;Feature 4&gt;** — brief description
+
+### Project Structure
 
 ```
-project_name/
+<project-name>/
+├── CMakeLists.txt
+├── Kconfig
+├── prj.conf
+├── west.yml
+├── docs/
+│   ├── PRD.md                   ← product requirements and acceptance criteria
+│   └── specs/
+│       ├── overview.md          ← spec index and architecture summary
+│       ├── architecture.md      ← module map, Zbus channels, boot sequence
+│       └── <module>-module.md   ← per-module specs
 ├── src/
-│   ├── main.c                 # Main application entry point
-│   ├── module1.c/.h           # Description of module 1
-│   └── module2.c/.h           # Description of module 2
-├── boards/
-│   └── board_name.conf        # Board-specific configuration
-├── CMakeLists.txt             # Build configuration
-├── Kconfig                    # Configuration options
-├── prj.conf                   # Base project configuration
-├── overlay-*.conf             # Configuration overlays
-├── LICENSE                    # Nordic 5-Clause License
-└── README.md                  # This file
+│   ├── main.c
+│   └── modules/
+│       ├── <module-a>/
+│       ├── <module-b>/
+│       └── messages.h
+└── boards/
+    └── <board>.overlay
 ```
 
-### Core Modules
+### Target Users:
 
-- **`main.c`**: Brief description of responsibilities
-- **`module1`**: Brief description of functionality
-- **`module2`**: Brief description of functionality
+- **Evaluator** — grab a pre-built `.hex` from the [Releases](<releases-url>) page, follow [Evaluator Quick Start](#evaluator-quick-start), and reach a working device in under 5 minutes.
+- **Developer** — clone the workspace, build from source, and customise the firmware; see [Developer Info](#developer-info).
 
-## 🚀 Quick Start Guide
+---
 
-### 1. Prerequisites
+## Evaluator Quick Start
 
-- [Nordic Connect SDK vX.X.X](https://docs.nordicsemi.com/bundle/ncs-X.X.X/page/nrf/installation/install_ncs.html)
-- Development board and required hardware
-- nRF Command Line Tools
+> Evaluator path — no build environment needed. ~5 minutes.
 
-### 2. Project Setup
+### Step 1 — Flash the firmware
+
+Download the pre-built `.hex` for your board from the [Releases](<releases-url>) page.
+
+Open **nRF Connect for Desktop → Programmer**, select your board, add the `.hex` file, and click **Erase & Write**.
+
+### Step 2 — Connect
+
+<Describe the shortest path to a working device: join Wi-Fi network, open browser URL, etc.>
+
+| Action | Value |
+|--------|-------|
+| &lt;e.g. Wi-Fi SSID&gt; | `<SSID>` |
+| &lt;e.g. Browser URL&gt; | `http://<hostname>.local` |
+
+### Step 3 — Verify
+
+<What the user should see when it works correctly: LED behaviour, browser page, UART output.>
+
+## Buttons & LEDs
+
+<!--
+Include this section when buttons/LEDs have user-visible behaviour or controls.
+For projects where buttons are read-only inputs and LEDs are API-controlled,
+replace with two tables (one per component).
+-->
+
+### Buttons
+
+| Board | Buttons | Function |
+|-------|---------|----------|
+| &lt;Board A&gt; | &lt;SW1, SW2&gt; | &lt;description, e.g. state and count shown in dashboard&gt; |
+| &lt;Board B&gt; + &lt;Shield&gt; | &lt;BUTTON0–BUTTON2&gt; | &lt;Same; BUTTON3 unavailable — shield pin conflict&gt; |
+
+### LEDs
+
+| Board | LEDs | Control |
+|-------|------|---------|
+| &lt;Board A&gt; | &lt;LED1, LED2&gt; | &lt;description, e.g. controlled via dashboard or `/api/led`&gt; |
+| &lt;Board B&gt; | &lt;LED0–LED3&gt; | &lt;Same&gt; |
+
+---
+
+## Developer Info
+
+### Workspace Setup
+
+#### Method 1 (Preferred) — Add to an existing NCS installation
+
+If you already have a matching NCS version installed, reuse it directly — no re-downloading required.
+
+Under a terminal with the toolchain:
+
+```sh
+cd /opt/nordic/ncs/<ncs-version>   # your existing NCS workspace root
+
+git clone https://github.com/<org>/<repo>.git
+
+# Switch the workspace manifest to <repo> (one-time change)
+west config manifest.path <repo>
+
+# Sync — NCS repos already present, only new project repos are cloned
+west update
+```
+
+#### Method 2 — Fresh installation as a Workspace Application
+
+##### Option A: nRF Connect for VS Code
+
+Follow the [custom repository guide](https://docs.nordicsemi.com/bundle/nrf-connect-vscode/page/guides/extension_custom_repo.html).
+
+##### Option B: CLI
+
+See the Nordic guide on [Workspace Application Setup](https://docs.nordicsemi.com/bundle/ncs-latest/page/nrf/dev_model_and_contributions/adding_code.html#workflow_4_workspace_application_repository_recommended).
+
+```sh
+west init -m https://github.com/<org>/<repo> --mr main <workspace-dir>
+cd <workspace-dir>
+west update
+```
+
+For product context and implementation details, start at [docs/specs/overview.md](docs/specs/overview.md) — it maps every PRD requirement to the spec file that implements it.
+
+### Build
 
 ```bash
-cd /path/to/ncs/workspace
-# Clone or copy project
-git clone https://github.com/username/project-name.git
-cd project-name
+nrfutil sdk-manager toolchain launch --ncs-version=v3.x.x -- \
+  west build -p -b <board-target> -d build <app-dir>
 ```
 
-### 3. Build Instructions
-
-**Basic Build:**
-```bash
-west build -p -b board_name
-```
-
-**Wi-Fi Build (if applicable):**
-```bash
-west build -p -b board_name -- -DSHIELD=nrf7002ek -DEXTRA_CONF_FILE=overlay-wifi.conf
-```
-
-**With Custom Configuration:**
-```bash
-west build -p -b board_name -- -DEXTRA_CONF_FILE=overlay-custom.conf
-```
-
-### 4. Flash and Deploy
+For &lt;Board B&gt; with shield:
 
 ```bash
-west flash
+nrfutil sdk-manager toolchain launch --ncs-version=v3.x.x -- \
+  west build -p -b <board-target> -d build <app-dir> -- -DSHIELD=<shield>
 ```
 
-### 5. Verify Operation
+### Flash
 
-1. Open serial terminal (115200 baud)
-2. Reset the device
-3. Verify expected output
+```bash
+# nRF7002DK
+west flash --erase
 
-## ⚙️ Configuration Guide
-
-### Kconfig Parameters
-
-| Parameter | Default | Description |
-|-----------|---------|-------------|
-| `CONFIG_PARAM1` | value | Description of parameter 1 |
-| `CONFIG_PARAM2` | value | Description of parameter 2 |
-
-### Build Overlays
-
-**overlay-feature1.conf** - Description
-```properties
-CONFIG_FEATURE1=y
-CONFIG_PARAM1=value
+# nRF54LM20DK
+west flash --recover
 ```
 
-**overlay-feature2.conf** - Description
-```properties
-CONFIG_FEATURE2=y
-CONFIG_PARAM2=value
-```
+### Serial Monitor
 
-## 🎮 Operation Guide
+Connect at **115200 baud**. The device prints its IP address and connection status at boot.
 
-### Hardware Controls
+---
 
-| Control | Function |
-|---------|----------|
-| **Button 1** | Description of function |
-| **Button 2** | Description of function |
+## Documentation
 
-### LED Indicators
+| Document | Description |
+|----------|-------------|
+| [docs/PRD.md](docs/PRD.md) | Product requirements, features, acceptance criteria |
+| [docs/specs/overview.md](docs/specs/overview.md) | Spec index, PRD-to-spec mapping, architecture summary |
+| [docs/specs/architecture.md](docs/specs/architecture.md) | Module map, Zbus channels, SYS_INIT boot order |
 
-| LED | Status | Description |
-|-----|--------|-------------|
-| **LED1** | On/Blinking | Status indication |
-| **LED2** | On/Blinking | Status indication |
+---
 
-### Step-by-Step Operation
+## Methodology
 
-1. **Step 1**: Detailed description
-2. **Step 2**: Detailed description
-3. **Step 3**: Detailed description
+This project was developed using the [chsh-ncs-workflow](https://github.com/chshzh/charlie-skills) — a four-phase lifecycle for NCS/Zephyr IoT projects where each phase has a dedicated AI skill:
 
-## 📊 Test Results (Optional)
+| Phase | Focus | Skill | Output |
+|-------|-------|-------|--------|
+| 1 — Product Definition | What the device should do, for whom, and why | `chsh-pm-prd` | `docs/PRD.md` |
+| 2 — Technical Design | Translate PRD into engineering specs | `chsh-dev-spec` | `docs/specs/*.md` |
+| 3 — Implementation | Implement code from approved specs | `chsh-dev-project` | `src/`, passing build |
+| 4 — QA & Test | Validate the build against PRD criteria | `chsh-qa-test` | `TEST-*.md`, `QA-*.md` |
 
-Include any benchmark results, performance metrics, or test data.
+Each phase feeds the next: requirements drive specs, specs drive code, code drives tests. Issues loop back to the right phase — code bugs to Phase 3, spec gaps to Phase 2, new requirements to Phase 1.
 
-## 🐛 Troubleshooting
+Supporting skills: `chsh-dev-commit` (logical git history), `chsh-dev-mem-opt` (flash/RAM analysis).
 
-### Common Issues
+---
 
-**Issue**: Description of problem
-- **Solution**: Step-by-step resolution
+## License
 
-**Issue**: Description of problem
-- **Solution**: Step-by-step resolution
-
-## 📖 Documentation (Optional)
-
-- [Technical Design Document](docs/design.md)
-- [API Reference](docs/api.md)
-- [Architecture Diagrams](docs/architecture.md)
-
-## 🤝 Contributing (Optional)
-
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/username/project-name/issues)
-- **Nordic DevZone**: [devzone.nordicsemi.com](https://devzone.nordicsemi.com/)
-- **Documentation**: [nRF Connect SDK Documentation](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/index.html)
-
-## 📝 License
-
-Copyright (c) 2026 Nordic Semiconductor ASA
+Copyright (c) &lt;year&gt; Nordic Semiconductor ASA
 
 [SPDX-License-Identifier: LicenseRef-Nordic-5-Clause](LICENSE)
 
 ---
 
-**⭐ If this project helps you, please consider giving it a star!**
+<!--
+## Optional Sections
+
+Add any of the following when appropriate for your project.
+Delete this comment block before publishing.
+
+### API Reference
+
+Use when the device exposes an HTTP REST API or other machine-readable interface.
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/resource` | GET | Returns ... |
+| `/api/resource` | POST | Controls ... |
+
+### Troubleshooting
+
+Use when common failure modes are known and documented.
+
+- &lt;Symptom&gt;: &lt;cause and resolution&gt;
+- &lt;Symptom&gt;: &lt;cause and resolution&gt;
+
+### References
+
+Use for key upstream documentation links.
+
+- [nRF Connect SDK Documentation](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/latest/nrf/index.html)
+- [Zephyr RTOS Documentation](https://docs.zephyrproject.org/latest/)
+
+### Contributing
+
+This project follows Nordic Semiconductor coding standards and Zephyr contribution guidelines.
+Contributions are welcome — open an issue or pull request.
+-->
