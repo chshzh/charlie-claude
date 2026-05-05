@@ -62,7 +62,7 @@ README QUALITY TARGETS
     └── <board>.overlay
 ```
 
-### Target Users:
+### Target Users
 
 - **Evaluator** — grab a pre-built `.hex` from the [Releases](<releases-url>) page, follow [Evaluator Quick Start](#evaluator-quick-start), and reach a working device in under 5 minutes.
 - **Developer** — clone the workspace, build from source, and customise the firmware; see [Developer Info](#developer-info).
@@ -90,7 +90,9 @@ Open **nRF Connect for Desktop → Programmer**, select your board, add the `.he
 
 ### Step 3 — Verify
 
-<What the user should see when it works correctly: LED behaviour, browser page, UART output.>
+&lt;What the user should see: LED state, browser dashboard URL, UART output. Include the screenshot here.&gt;
+
+![&lt;Project name&gt; dashboard](docs/images/screenshot.png)
 
 ## Buttons & LEDs
 
@@ -173,10 +175,10 @@ nrfutil sdk-manager toolchain launch --ncs-version=v3.x.x -- \
 ### Flash
 
 ```bash
-# nRF7002DK
+# <Board A>
 west flash --erase
 
-# nRF54LM20DK
+# <Board B>
 west flash --recover
 ```
 
