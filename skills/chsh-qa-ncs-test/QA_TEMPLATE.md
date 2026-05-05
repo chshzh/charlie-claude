@@ -1,4 +1,4 @@
-# NCS Project Quality Assurance Report — <Project Name>
+# Phase 4 Report — <Project Name>
 
 ## Document Information
 
@@ -8,9 +8,11 @@
 | Version | YYYY-MM-DD-HH-MM |
 | PRD Version | YYYY-MM-DD-HH-MM |
 | Specs Version | YYYY-MM-DD-HH-MM |
-| Reviewer | |
+| Tester | |
+| QA Reviewer | *(leave blank for routine cycles)* |
+| Board / Shield | e.g. nRF7002DK + nRF7002-EK |
 | NCS Version | e.g. v3.2.4 |
-| Board / Platform | e.g. nRF7002DK |
+| Firmware built | YYYY-MM-DD-HH-MM |
 | Status | Draft / Pass / Fail |
 
 ---
@@ -19,9 +21,126 @@
 
 | Version | Summary of changes |
 |---|---|
-| YYYY-MM-DD-HH-MM | Initial QA review |
+| YYYY-MM-DD-HH-MM | Initial test run |
 
 ---
+
+## Part A — Functional Test
+
+> **Always required.** Run on hardware after every implementation cycle.
+> This is the proof that the PRD acceptance criteria are satisfied.
+
+### Test Environment
+
+```bash
+# Board connected:
+# Flash command used:
+west flash --build-dir build/
+
+# Serial monitor:
+# (port, baud rate)
+```
+
+---
+
+### Summary
+
+| Total TCs | Passed | Failed | Blocked | Not Run |
+|-----------|--------|--------|---------|---------|
+| | | | | |
+
+**Overall Result:**
+- [ ] ✅ PASS — all P0 acceptance criteria met
+- [ ] ⚠️ PASS WITH ISSUES — P1/P2 failures only
+- [ ] ❌ FAIL — one or more P0 criteria failed
+
+**Verdict**: _one sentence summary_
+
+---
+
+### Test Results
+
+> Each test case (TC) maps directly to a PRD acceptance criterion.
+> Copy the TC IDs and acceptance text from `docs/PRD.md`.
+
+#### FR-001 — <Feature Title>
+
+| TC | Acceptance Criterion (from PRD) | Result | UART / Evidence |
+|----|--------------------------------|--------|-----------------|
+| TC-001-01 | <criterion text> | ✅ Pass / ❌ Fail / ⚠️ Partial / ⬜ Not Run | |
+| TC-001-02 | <criterion text> | | |
+
+**Notes / Observations:**
+
+---
+
+#### FR-002 — <Feature Title>
+
+| TC | Acceptance Criterion (from PRD) | Result | UART / Evidence |
+|----|--------------------------------|--------|-----------------|
+| TC-002-01 | <criterion text> | | |
+
+**Notes / Observations:**
+
+---
+
+#### NFR — Non-Functional Requirements
+
+| TC | Requirement (from PRD) | Metric | Measured | Result |
+|----|----------------------|--------|----------|--------|
+| TC-NFR-01 | Connection time < 30 s | 30 s | ___ s | ✅ / ❌ |
+| TC-NFR-02 | Page load < 2 s | 2 s | ___ s | ✅ / ❌ |
+| TC-NFR-03 | Memory headroom > 50 KB RAM | 50 KB | ___ KB | ✅ / ❌ |
+
+---
+
+### Failed Tests Detail
+
+> Fill in only for ❌ Fail or ⚠️ Partial results.
+
+#### TC-XXX-YY — <criterion text>
+
+**Expected**: <what PRD says should happen>
+
+**Actual**: <what actually happened>
+
+**UART log**:
+```
+<paste relevant log lines>
+```
+
+**Root cause (if known)**:
+
+**Suggested fix / routing**:
+- [ ] Code fix → Phase 3
+- [ ] Spec gap → Phase 2
+- [ ] PRD change → Phase 1
+
+---
+
+### UART Boot Log
+
+> Paste the full boot sequence log here as evidence.
+
+```
+<paste UART output from power-on to ready state>
+```
+
+---
+
+### Performance Metrics
+
+| Metric | Target | Measured | Pass? |
+|--------|--------|----------|-------|
+| Boot to ready | < ___ ms | ___ ms | |
+| Wi-Fi connect time | < ___ s | ___ s | |
+
+---
+
+## Part B — Code Quality Review
+
+> **Release / Demo only.** No hardware required — AI reviews code and documentation.
+> Skip for routine development cycles. Mark all sections in Part B as `[SKIP]` if not running.
 
 ## Executive Summary
 
@@ -263,16 +382,18 @@ _3=All appropriate files present, 2=Most present, 1=Some present, 0=None_
 
 ### 5.1 README.md (8 points)
 
+**Quality targets**: 3,000–7,000 characters (exc. code blocks) · 8–12 min read · evaluator reaches working device via Quick Start without leaving the section.
+
 | Section | Present | Complete | Quality | Score |
 |---------|---------|----------|---------|-------|
-| Title/Badges | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Overview | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Hardware Requirements | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Quick Start | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Build Instructions | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Configuration Guide | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Operation Guide | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
-| Troubleshooting | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Title + badges + one-liner | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Screenshot or demo image | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Features list | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Project Structure tree | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Quick Start (evaluator path ≤5 min) | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Developer Info (build + flash) | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Buttons & LEDs reference table | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
+| Documentation links table | ☐ | ☐ | ☐ Good ☐ Fair ☐ Poor | /1 |
 
 **Score**: ___/8
 
@@ -478,32 +599,6 @@ Issue description
 
 ---
 
-## Recommendations for ncs-project-generate Skill
-
-Based on this review, we recommend the following improvements to the ncs-project-generate templates:
-
-### Template Updates
-1. 
-2. 
-3. 
-
-### Documentation Enhancements
-1. 
-2. 
-3. 
-
-### New Examples/Patterns
-1. 
-2. 
-3. 
-
-### Checklist Additions
-1. 
-2. 
-3. 
-
----
-
 ## Follow-up Actions
 
 ### For Project Team
@@ -514,65 +609,9 @@ Based on this review, we recommend the following improvements to the ncs-project
 | Fix critical issue #2 | | | ☐ |
 | Address warning #1 | | | ☐ |
 
-### For Reviewer
-
-- [ ] Send report to project team
-- [ ] Schedule follow-up review
-- [ ] Update ncs-project-generate templates
-- [ ] Share learnings with team
-
 ---
 
-## Conclusion
-
-**Overall Assessment**:
-
-
-**Risk Level**: 
-- [ ] 🟢 Low - Ready for release
-- [ ] 🟡 Medium - Minor issues to address
-- [ ] 🟠 High - Significant rework needed
-- [ ] 🔴 Critical - Major problems
-
-**Estimated Effort to Address Issues**:
-- Critical: ___ hours
-- Warnings: ___ hours
-- Improvements: ___ hours
-- **Total**: ___ hours
-
-**Next Review**: _______________
-
-**Sign-off**:
-
-Reviewer: _________________________ Date: _________
-
-Project Lead: _____________________ Date: _________
-
----
-
-## Appendix A: Test Results
-
-### Build Output
-```
-
-
-```
-
-### Runtime Log
-```
-
-
-```
-
-### Performance Metrics
-- Boot time: ___ ms
-- Memory usage: ___ KB
-- Throughput: ___ Mbps
-- Latency: ___ ms
-
----
-
-## Appendix B: Tool Versions
+## Appendix A — Tool Versions
 
 - NCS Version: 
 - Zephyr Version: 
@@ -583,7 +622,7 @@ Project Lead: _____________________ Date: _________
 
 ---
 
-## Appendix C: References
+## Appendix B — References
 
 - Project repository: 
 - Documentation: 

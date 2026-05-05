@@ -8,12 +8,15 @@ description: Phase 4 of the NCS project lifecycle. Generates a Test Report (PRD 
 Phase 4 of the NCS project lifecycle. Validates that the implementation is both
 well-built (QA Report) and behaves as the PRD requires (Test Report).
 
-> **Two documents, two questions, different cadence:**
+> **One output file, two sections, different cadence:**
 >
-> | Document | Question | Hardware? | When required | Output |
-> |----------|----------|-----------|---------------|--------|
-> | Test Report | "Does it behave as the PRD says?" | Yes — run on board | **Always** — after every implementation cycle | `docs/TEST-YYYY-MM-DD-HH-MM.md` |
-> | QA Report | "Is the code well-built?" | No — AI reviews code | **Release/demo only** — optional otherwise | `docs/QA-YYYY-MM-DD-HH-MM.md` |
+> | Section | Question | Hardware? | When required |
+> |---------|----------|-----------|---------------|
+> | Part A — Functional Test | "Does it behave as the PRD says?" | Yes — run on board | **Always** — after every implementation cycle |
+> | Part B — Code Quality | "Is the code well-built?" | No — AI reviews code | **Release/demo only** — optional otherwise |
+>
+> Both sections go into a single dated file: `docs/TEST-YYYY-MM-DD-HH-MM.md`
+> For routine cycles, fill Part A and mark Part B sections `[SKIP]`.
 
 ---
 
@@ -70,11 +73,19 @@ For failures, record expected vs actual behaviour and suggest routing:
 Use `TEST_TEMPLATE.md` as the base. Fill in:
 - Document Information (PRD Version, Specs Version, firmware build timestamp)
 - Changelog entry for this run
-- Summary table (total / passed / failed / blocked)
-- Results grouped by FR
-- NFR measurements with targets vs actuals
-- Failed test detail section
-- Full UART boot log in appendix
+- Part A: Summary table (total / passed / failed / blocked)
+- Part A: Results grouped by FR
+- Part A: NFR measurements with targets vs actuals
+- Part A: Failed test detail section
+- Part A: Full UART boot log and performance metrics
+- Part B: Mark all sections `[SKIP — routine cycle]`
+
+**Test Report quality criteria**:
+- Every TC maps to an exact acceptance criterion from the PRD — no invented test cases
+- Evidence is specific: paste the relevant UART log lines, not a generic "it worked"
+- NFR rows always have a measured number (not just ✅) — e.g. "29 s" not just "pass"
+- Failed TC detail includes expected vs actual behaviour and a routing recommendation
+- The executive summary (total/pass/fail + one-sentence verdict) appears at the top before results
 
 ---
 
@@ -90,14 +101,23 @@ Score each category:
 - Core files quality (CMakeLists.txt, Kconfig, prj.conf, main.c)
 - Configuration (Wi-Fi config, build config)
 - Code quality (coding standards, error handling, memory, thread safety)
-- Documentation (README, code comments)
+- Documentation (README, code comments) — see README quality criteria below
 - Wi-Fi implementation (mode-specific correctness, event handling)
 - Security (credentials, network security, debug features)
 - Build verification (clean build, no warnings, binary size)
 
-### B2. Generate `docs/QA-YYYY-MM-DD-HH-MM.md`
+**README quality criteria** (applied when scoring Documentation):
+- **Cognitive funnel**: starts broad (what/why), goes narrow (how). An evaluator reaches a working device via Quick Start without reading past that section.
+- **Dual audience**: evaluator path (pre-built hex, ≤5 min) is clearly separated from developer path (build from source).
+- **Completeness**: one-liner description, screenshot or demo image, features list, project structure tree, Quick Start, build/flash commands, buttons & LEDs table, documentation links.
+- **Length**: 3,000–7,000 characters (excluding code blocks). Under 1,500 chars is too sparse; over 10,000 should be split into separate docs.
+- **No emojis in section headings** — professional tone consistent with Nordic SDK documentation style.
+- **Tested**: Quick Start steps verified by someone other than the developer.
 
-Use `QA_TEMPLATE.md` as the base. Fill in all sections.
+### B2. Fill in Part B of the report
+
+Open the `docs/TEST-YYYY-MM-DD-HH-MM.md` already created in Part A.
+Replace the `[SKIP]` placeholders in Part B with the actual review content.
 Record the overall score (0–100) and verdict (PASS / PASS WITH ISSUES / REWORK / FAIL).
 
 ---
@@ -152,15 +172,13 @@ Then ask:
 
 | File | Purpose |
 |------|---------|
-| `QA_TEMPLATE.md` | Code quality review template (Part B output) |
-| `TEST_TEMPLATE.md` | Functional test report template (Part A output) |
+| `QA_TEMPLATE.md` | Combined Phase 4 report template — Part A (functional test) + Part B (code quality) |
 
 ## Document Conventions
 
-- **Test Report**: `docs/TEST-YYYY-MM-DD-HH-MM.md` — functional test snapshot
-- **QA Report**: `docs/QA-YYYY-MM-DD-HH-MM.md` — code quality audit snapshot
-- Both are dated snapshots; keep all runs for history
-- Both include PRD Version and Specs Version in Document Information for traceability
+- **Phase 4 Report**: `docs/TEST-YYYY-MM-DD-HH-MM.md` — dated snapshot containing Part A always, Part B when running a release/demo review
+- Keep all runs for history
+- Both Parts include PRD Version and Specs Version in Document Information for traceability
 
 ## Related Skills
 
