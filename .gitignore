@@ -26,3 +26,8 @@
 *.bak
 *.backup
 *.orig
+
+# claude 
+/hooks/
+settings.json
+skills/gitnexus-*
