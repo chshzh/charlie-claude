@@ -153,6 +153,33 @@ Signed-off-by: Your Name <your.email@example.com>
 - Always include a non-empty body — CI will reject empty bodies for upstream PRs
 - Run `git log -- <file>` to see how others formatted commits for the same subsystem
 
+## Using Conversation Context
+
+When making commits during or after a conversation where changes were made, **use the conversation to enrich commit messages** — not just the raw diff.
+
+### What to pull from context
+
+| Context signal | How to use it |
+|---|---|
+| Why a change was made (user explanation or decision) | Use in the commit body as rationale |
+| What was tried and rejected | Mention in the body to document intent |
+| Linked issue / ticket number mentioned in chat | Add as `Ref:` or body reference |
+| AI-assisted implementation discussed in chat | Add `Assisted-by: Claude:claude-sonnet-4.6` |
+| A specific user instruction (e.g. "remove X because Y") | Reflect Y in the commit message body |
+
+### Example
+
+If the conversation shows: *"remove .toolchain-version and update CI because Nordic publishes toolchain images for all releases including RCs"*, the commit body should say exactly that — don't just write "remove .toolchain-version".
+
+### Step 1 addendum — Review conversation alongside diff
+
+Before Step 2 (propose plan), scan the conversation for:
+- Stated reasons for changes
+- Decisions made (e.g. "use v3.3.0-rc2 instead of v3.3-branch")
+- Any user-provided context that explains *why* files changed
+
+Incorporate this into the **Rationale** column of the commit plan and the commit body.
+
 ## Splitting Changes Within a Single File
 
 When one file contains two or more logically distinct changes that belong in separate commits (e.g. a bug fix + a new policy section), split them without interactive staging:
