@@ -39,4 +39,5 @@ cache/
 history.jsonl
 plugins/
 sessions/
+file-history/
 
