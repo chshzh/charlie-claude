@@ -50,6 +50,15 @@
 | e.g. Wi-Fi connects | < 30 seconds from power-on | UART log timestamp |
 | e.g. Works without restart | 24 hours | Leave running overnight |
 
+### 1.5 Assumptions
+
+*State the assumptions this PRD is built on. If any of these turn out to be wrong, requirements may need to change.*
+
+| # | Assumption | Risk if wrong |
+|---|---|---|
+| A1 | e.g. Target users have a phone/laptop with Wi-Fi | High — core connection flow breaks |
+| A2 | e.g. Device is used on a private network | Medium — security requirements may increase |
+
 ---
 
 ## 2. Device Capabilities
@@ -234,7 +243,19 @@ Example:
 
 ---
 
-## 8. Open Questions
+## 8. Out of Scope
+
+*Explicitly list what this product will NOT do in this release. Being clear here prevents scope creep and avoids engineer confusion.*
+
+| Not building | Why / when might we revisit |
+|---|---|
+| e.g. Cloud dashboard | Out of scope for v1 — local-only is sufficient |
+| e.g. iOS/Android app | Not needed; browser interface covers all users |
+| e.g. Multiple simultaneous Wi-Fi modes | Too complex for initial release |
+
+---
+
+## 9. Open Questions
 
 *Things that are not yet decided.*
 
@@ -244,7 +265,7 @@ Example:
 
 ---
 
-## 9. Engineering Spec References
+## 10. Engineering Spec References
 
 *Filled in by the Developer Engineer after receiving this PRD.*
 

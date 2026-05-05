@@ -94,6 +94,12 @@ Examples: "connects within 30 seconds", "page loads under 2 seconds", "runs for 
 ### A9. Release Criteria
 Ask: which P0 requirements must all pass before the product can be released?
 
+### A10. Out of Scope
+Ask: *"Are there features or behaviours that you explicitly do NOT want in this release?"*
+
+This is important — a clear "not building" list prevents engineer confusion and scope creep.
+Examples: "no cloud connectivity in v1", "no iOS app", "no OTA updates yet".
+
 ---
 
 ## Mode B — Add Feature
@@ -172,6 +178,34 @@ After any mode:
    | YYYY-MM-DD-HH-MM | <one-line summary of changes> |
    ```
 3. Confirm: *"PRD updated. New revision added to Revision History."*
+
+---
+
+## PRD Quality Checklist
+
+Before handing off, verify the PRD meets these criteria.
+
+### Completeness
+- [ ] Every FR has at least 2 acceptance criteria that can be tested without reading the code
+- [ ] Success metrics have numeric targets and a measurable method
+- [ ] Assumptions are listed (even obvious ones)
+- [ ] Out-of-scope items are explicitly named
+- [ ] Release criteria (P0 gate) are listed
+
+### Clarity (the "no-code" test)
+- [ ] A non-engineer could read this and understand what the device does
+- [ ] No Kconfig symbols, Flash/RAM numbers, or architecture terms in functional requirements
+- [ ] User stories use "As a… I want to… so that…" format
+
+### Living document
+- [ ] Revision History has a new entry for every change
+- [ ] PRD Version matches the latest Changelog entry date
+
+### Anti-patterns to avoid
+- Over-specifying implementation details (leave HOW to the engineer)
+- Writing acceptance criteria that require source code to verify
+- Treating the PRD as immutable — update it as the team learns
+- Writing the PRD alone without developer/designer input
 
 ---
 
